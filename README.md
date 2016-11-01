@@ -7,9 +7,8 @@ Mentionner le contexte (cours, sigle, université, etc.).
 
 ## Auteurs
 
-- Prénom et nom (Code permanent)
-- Prénom et nom (Code permanent)
-- Prénom et nom (Code permanent)
+- Jean-Lou Hallée (HALJ05129309)
+- Olivier Levasseur (LEVO)
 
 ## Plateformes supportées
 
