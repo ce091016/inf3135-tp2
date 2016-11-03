@@ -1,15 +1,14 @@
-SOURCE_NAME = src/tp2
-EXEC = tp2
-FLAGS = -Wall
 
-$(EXEC): $(SOURCE_NAME).o
-	gcc -o $(EXEC) $(SOURCE_NAME).o
 
-$(SOURCE_NAME).o: $(SOURCE_NAME).c
-	gcc $(FLAGS) -c $(SOURCE_NAME).c
+tp2: bin/tp2.o
+	gcc -o bin/tp2 tp2.o
+	rm tp2.o
+bin/tp2.o: src/tp2.c
+	gcc -c src/tp2.c
+
 
 .PHONY: clean
 
 clean:
-		rm *.o
-		rm $(EXEC)	
+		rm -f *.o
+		rm -f tp2
