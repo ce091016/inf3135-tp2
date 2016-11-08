@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
                 {0, 0, 0, 0}
             };
         int option_index = 0;
-      c = getopt_long(argc, argv, "", long_options, &option_index);
+        c = getopt_long(argc, argv, "", long_options, &option_index);
 
 
         if(c == -1) break;
@@ -42,30 +42,40 @@ int main(int argc, char *argv[]){
                 break;
 
             case 1:
-                printf("option -a\n");
+                printf("flag help\n");
                 break;
             
             case 2:
-                printf("option -b\n");
+                printf("flag output-format + %s\n",optarg);
                 break;
             
             case 3:
-                printf("option -c\n");
+                printf("flag output-filename + %s\n",optarg);
                 break;
 
             case 4:
-                printf("option -d\n");
+                printf("flag show-languages\n");
                 break;
 
             case 5:
+                printf("flag show-capital\n");
+                break;
 
             case 6:
+               printf("flag show-borders\n");
+               break;
 
             case 7:
+               printf("flag show-flag\n");
+               break;
 
             case 8:
+                printf("flag country + %s\n",optarg);
+                break;
 
             case 9:
+                printf("flag region + %s\n",optarg);
+                break;
 
             case '?':
                 break;
@@ -75,8 +85,8 @@ int main(int argc, char *argv[]){
         }
     }
 
-    if(option_flag == 4)
-        puts("option_flag is set.\n");
+   // if(option_flag == 4)
+     //   puts("option_flag is set.\n");
 
     if(optind < argc){
         printf("non-option ARGV-elements: ");
@@ -86,8 +96,6 @@ int main(int argc, char *argv[]){
         }
 
         exit(0);
-
-
     }
     
 }
