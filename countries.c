@@ -3,19 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-//FUITE DE MEMOIRE ??? fonction readCountries
 
-json_t* countries_getJsonObjectFromCountry(char * code, json_t* tabPays);
+#include "countries.h"
 
-const char * countries_getNomPays(json_t * pays);
-
-const char * countries_getCapitale(json_t * pays);
-
-const char * countries_getFrontieres(json_t * pays);
-
-const char * countries_getLangues(json_t * pays);
-
-int main (int argc, char *argv[]) {
+/*int main (int argc, char *argv[]) {
     
     json_error_t error;
     json_t *root;
@@ -40,7 +31,8 @@ int main (int argc, char *argv[]) {
     printf("get capitale : %s\n", countries_getCapitale(test));
     countries_getLangues(test);
     countries_getFrontieres(test);
-}
+    printf("nbLangues : %d\n", countries_nbLangues(test));
+}*/
 
     
 json_t* countries_getJsonObjectFromCountry(char * code, json_t* tabPays) {
@@ -107,6 +99,18 @@ const char * countries_getLangues(json_t * pays) {
 //    strcat(languesRetour, finChaineLangue);
 //    return languesRetour;
 }
+
+json_t * countries_langues(json_t *pays) {
+    return json_object_get(pays, "languages");
+}
+
+int countries_nbLangues(json_t * pays) {
+    json_t * langues = json_object_get(pays, "languages");
+    return json_object_size(langues);
+}
+
+//a faire: changer les noms getLangues et getFrontieres pour printLangues...
+//changer get Capitale et getNom pour countries_Capitale et countries_Nom
 
 //ma strategie presentement est d'aller chercher les objets dont je veux connaitre
 //certaines informations et appeler des methodes retournant les informations sur
