@@ -54,15 +54,14 @@ utilisez cette section pour indiquer la liste des tâches à effectuer pour
 compléter le projet en utilisant le [format spécial
 Markdown](https://docs.gitlab.com/ce/user/markdown.html#task-lists) :
 
-- [ ] Tâche 1
+- [ ] Programme principal
 
-  - [x] Sous-tâche 1.1 (complété par Alice)
-  - [ ] Sous-tâche 1.2 (responsable : Bob)
+  - [ ] Lecture de countries.json (responsable: Olivier)
+  - [ ] Gérer les input (responsable : Jean-Lou)
 
-- [ ] Tâche 2
+- [ ] Autres
 
-  - [ ] Sous-tâche 2.1 (responsable : Alice)
-  - [x] Sous-tâche 2.2 (complété par Bob)
-  - [ ] Sous-tâche 2.3 (responsable : Alice et Bob)
+  - [ ] Mise à jour du Readme (responsable : Jean-Lou et Olivier)
+  - [ ] Makefile (responsable : Jean-Lou)
 
 - [ ] Tâche 3
