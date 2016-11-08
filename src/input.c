@@ -27,8 +27,8 @@ int main(int argc, char *argv[]){
             };
         int option_index = 0;
         c = getopt_long(argc, argv, "", long_options, &option_index);
-
-
+        
+        if(c == '?') option_flag = '?';
         if(c == -1) break;
 
         switch(option_flag){
