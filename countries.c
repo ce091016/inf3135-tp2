@@ -35,7 +35,7 @@
 }*/
 
     
-json_t* countries_getJsonObjectFromCountry(char * code, json_t* tabPays) {
+json_t* countries_getJsonObjectFromCountry(char *code, json_t *tabPays) {
     json_t * returnObj;
     int i;
     for(i = 0; i < json_array_size(tabPays); i++) {
@@ -56,19 +56,19 @@ json_t* countries_getJsonObjectFromCountry(char * code, json_t* tabPays) {
     return returnObj;
 }
 
-const char * countries_getNomPays(json_t * pays) {
+const char * countries_getNomPays(json_t *pays) {
     json_t * nom = (json_object_get(json_object_get(pays, "name"), "official"));
     const char * nomRetour = json_string_value(nom);
     return nomRetour;
 }
 
-const char * countries_getCapitale(json_t * pays) {
+const char * countries_getCapitale(json_t *pays) {
     json_t *capitale = (json_object_get(pays, "capital"));
     const char *capitaleRetour = json_string_value(capitale);
     return capitaleRetour;
 }
 
-const char * countries_getFrontieres(json_t * pays) {
+const char * countries_getFrontieres(json_t *pays) {
     json_t * frontieres = json_object_get(pays, "borders");
     int i;
     for (i=0; i<json_array_size(frontieres); i++) {
@@ -77,7 +77,7 @@ const char * countries_getFrontieres(json_t * pays) {
     }
 }
 
-const char * countries_getLangues(json_t * pays) {
+const char * countries_getLangues(json_t *pays) {
     json_t * langues = json_object_get(pays,"languages");
     void * iter = json_object_iter(langues);
     json_t * langueTemp = json_object_iter_value(iter);
@@ -104,9 +104,38 @@ json_t * countries_langues(json_t *pays) {
     return json_object_get(pays, "languages");
 }
 
-int countries_nbLangues(json_t * pays) {
-    json_t * langues = json_object_get(pays, "languages");
+int countries_nbLangues(json_t *pays) {
+    json_t *langues = json_object_get(pays, "languages");
     return json_object_size(langues);
+}
+
+const char * countries_region(json_t *pays) {
+    json_t *region = json_object_get(pays, "region");
+    return json_string_value(region);
+}
+
+json_t ** countries_paysSelonRegion(json_t *tabPays, char *region) {
+    int capacite = 27;
+    json_t **tabPaysRegion = malloc(sizeof(json_t *) * capacite);
+    int nbElements = 0;
+    int i;
+    for (i=0; i<json_array_size(tabPays); i++) {
+        json_t *paysTemp = json_array_get(tabPays, i);
+        if (strcmp(countries_region(paysTemp),region) == 0) {
+            if (nbElements >= capacite) {
+                tabPaysRegion = realloc(tabPaysRegion, sizeof(json_t *) * (capacite * 2));
+                capacite = capacite * 2;
+            }
+
+            *(tabPaysRegion + nbElements)= paysTemp;
+
+            nbElements++;
+           // printf("nbElements : %d\n", nbElements);
+        }
+    }
+    return tabPaysRegion;
+    //retourner un tableau de pointeurs vers les pays qui
+    //font partie d'une région
 }
 
 //a faire: changer les noms getLangues et getFrontieres pour printLangues...
