@@ -19,6 +19,8 @@ int countries_nbLangues(json_t * pays);
 
 json_t * countries_langues(json_t *pays); 
 
+json_t *countries_frontieres(json_t *pays);
+
 json_t * countries_paysSelonRegion(json_t *tabPays, char * region);
 
 const char * countries_region(json_t *pays);

@@ -50,10 +50,10 @@ json_t *countries_getJsonObjectFromCountry(char *code, json_t *tabPays) {
         }
         if (strcmp(codeParam, codePays)==0) {
             returnObj = data;
-            break;
+            return returnObj;
         }
     }
-    return returnObj;
+    return NULL;
 }
 
 const char * countries_getCode(json_t *pays) {
@@ -109,6 +109,10 @@ const char * countries_getLangues(json_t *pays) {
 
 json_t * countries_langues(json_t *pays) {
     return json_object_get(pays, "languages");
+}
+
+json_t *countries_frontieres(json_t *pays) {
+    return json_object_get(pays, "borders");
 }
 
 int countries_nbLangues(json_t *pays) {
