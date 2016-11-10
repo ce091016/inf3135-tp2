@@ -18,17 +18,28 @@
 #define COUNTRY 9
 #define REGION 11
 
+void textOutput(char **rep);
+void help();
 
 int main(int argc, char *argv[]){
+    char **rep = (char**)calloc(TAILLE_MAX + 1, sizeof(char*)); 
+    input(argc, argv, rep);
+    textOutput(rep);
+    free(rep);
+    return 0;
+}
+
+void textOutput(char **rep){
     json_error_t error;
     json_t *root = json_load_file("data/countries/countries.json",0,&error);
     json_t *test;
     json_t *values;
-    bool onlyOnCountry = false;
+    bool onlyOneCountry = false;
     int i = 0;
-    char **rep = (char**)calloc(TAILLE_MAX + 1, sizeof(char*));
-    
-    input(argc, argv, rep);
+    if(rep[HELP != NULL]){
+        help();
+        exit(0);
+    } 
     if(rep[OUTPUT_FORMAT] != NULL){
         if(rep[OUTPUT_FILENAME] != NULL){
         
@@ -36,7 +47,7 @@ int main(int argc, char *argv[]){
     } 
     if(rep[COUNTRY] != NULL){
         test = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
-        onlyOnCountry = true;
+        onlyOneCountry = true;
     }else if(rep[REGION] != NULL){
         values = countries_paysSelonRegion(root,rep[REGION + 1]);
     }else{
@@ -44,7 +55,8 @@ int main(int argc, char *argv[]){
     }
 
     do  {
-       if(!onlyOnCountry) test = json_array_get(values,i);
+        if(!onlyOneCountry) test = json_array_get(values,i);
+        
         printf("Name : %s\n",countries_getNomPays(test));
         printf("Code : %s\n",countries_getCode(test));
     
@@ -64,14 +76,36 @@ int main(int argc, char *argv[]){
     
         }
         i++;
-    }while(i < json_array_size(values) && rep[COUNTRY] == NULL);
+    }while(rep[COUNTRY] == NULL && i < json_array_size(values));
 
     
 
     if(rep[REGION] != NULL && rep[COUNTRY] != NULL) printf("Option '--country' activated; option '--region' ignored.\n");
-    printf("%d\n",i);
-    free(rep);
+}
 
+void help(){
+    printf("Usage: bin/tp2 [--help] [--output-format FORMAT] [--output-filename FILENAME]\n");
+	printf(" [--show-languages] [--show-capital] [--show-borders] [--show-flag]\n");
+ 	printf(" [--country COUNTRY] [--region REGION]\n\n");
 
-    return 0;
+	printf("Displays information about countries.\n\n");
+
+	printf("Optional arguments:\n");
+  	printf("  --help                     Show this help message and exit.\n");
+  	printf("  --output-format FORMAT     Selects the ouput format (either \"text\", \"dot\" or \"png\").\n");
+    printf("                             The \"dot\" format is the one recognized by Graphviz.\n");
+    printf("                             The default format is \"text\".\n");
+  	printf("  --output-filename FILENAME The name of the output filename. This argument is\n");
+    printf("                             mandatory for the \"png\" format. For the \"text\" and \"dot\"\n");
+    printf("                             format, the result is printed on stdout if no output\n");
+    printf("                             filename is given.\n");
+  	printf("  --show-languages           The official languages of each country are displayed.\n");
+  	printf("  --show-capital             The capital of each country is displayed.\n");
+    printf("  --show-borders             The borders of each country is displayed.\n");
+  	printf("  --show-flag                The flag of each country is displayed\n");
+    printf("                             (only for \"dot\" and \"png\" format).\n");
+  	printf("  --country COUNTRY          The country code (e.g. \"can\", \"usa\") to be displayed.\n");
+  	printf("  --region REGION            The region of the countries to be displayed.\n");
+    printf("                             The supported regions are \"africa\", \"americas\",\n");
+    printf("                             \"asia\", \"europe\" and \"oceania\".\n");
 }
