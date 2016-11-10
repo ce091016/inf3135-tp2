@@ -31,9 +31,9 @@
 //        
 //}
 
-void graphviz_ecrireUnPays(int langues, int capitale, int frontieres, int flag, char * codePays, json_t *tabPays, FILE * graphviz) {
+void graphviz_ecrireUnPays(int langues, int capitale, int frontieres, int flag, json_t *pays, FILE * graphviz) {
     
-    json_t * pays = countries_getJsonObjectFromCountry(codePays, tabPays);
+    const char * codePays = countries_getCode(pays); 
     fprintf(graphviz, "%s%s%s", DEBUTPAYS, codePays, DEBUTPAYS2);
     fprintf(graphviz, "%s%s", SHAPE, LABEL);
     if (flag == 1) {
@@ -72,10 +72,21 @@ void graphviz_ecrireUnPays(int langues, int capitale, int frontieres, int flag, 
     fprintf(graphviz, "%s%s", LABELFIN, FINPAYS);
 }
 
-void graphviz_ecrireUnSeulPays(int langues, int capitale, int frontieres, int flag, char * codePays, json_t *tabPays) {
+void graphviz_ecrireUnSeulPays(int langues, int capitale, int frontieres, int flag, json_t *pays) {
     FILE * graphviz = fopen("graphviz.dot", "w");
     fprintf(graphviz, "%s", DEBUTGRAPH);
-    graphviz_ecrireUnPays(langues, capitale, frontieres, flag, codePays, tabPays, graphviz);    
+    graphviz_ecrireUnPays(langues, capitale, frontieres, flag, pays, graphviz);    
+    fprintf(graphviz, "%s", FINGRAPH);
+    fclose(graphviz);
+}
+
+void graphviz_ecrirePlusieursPays(int langues, int capitale, int frontieres, int flag, json_t *tabPays) {
+    FILE * graphviz = fopen("graphviz.dot", "w");
+    fprintf(graphviz, "%s", DEBUTGRAPH);
+    int i;
+    for (i=0; i< json_array_size(tabPays); i++) {
+        graphviz_ecrireUnPays(langues, capitale, frontieres, flag, json_array_get(tabPays, i), graphviz);
+    }
     fprintf(graphviz, "%s", FINGRAPH);
     fclose(graphviz);
 }
@@ -83,4 +94,7 @@ void graphviz_ecrireUnSeulPays(int langues, int capitale, int frontieres, int fl
 //pourquoi ne pas seulement passer le pays en paramètres?
 //
 //A FAIRE: 
-//prendre le code de ecrireUnPays et le séparer en sous-fonctions
+//--prendre le code de ecrireUnPays et le séparer en sous-fonctions
+//--rajouter à la fin de ecrirePlusieursPays les liens entre les pays qui ont des frontières communes
+//--mettre les noms de code en lettre minuscules
+//
