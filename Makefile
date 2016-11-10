@@ -1,27 +1,33 @@
-CURRENT_DIR = $(notdir$(shell pwd))
-#CURRENT_DIR = $(CURDIR)
-EXEC_PATH = $(CURRENT_DIR)bin
-FILE = tp2
-SRC_PATH = $(CURRENT_DIR)src
-CFLAGS = -Wall 
+#CURRENT_DIR = $(notdir$(shell pwd))
+#EXEC_PATH = $(CURRENT_DIR)bin
+#FILE = tp2
+#SRC_PATH = $(CURRENT_DIR)src
+#CFLAGS = -Wall 
 
-#tp2: tp2.o
-#	gcc -o bin/tp2 tp2.o  
-#	mv *.o $(CURRENT_DIR)/bin
+
+#$(FILE): $(FILE).o
+#	gcc -o $(EXEC_PATH)/$(FILE) $(FILE).o
+#	mv *.o $(EXEC_PATH)
+
+#$(FILE).o: $(SRC_PATH)/$(FILE).c
+#	gcc $(CFLAGES) -c $(SRC_PATH)/$(FILE).c
+
+#.PHONY: clean
+
+#clean:
+#		rm -f $(EXEC_PATH)/*.o
+#		rm -f $(EXEC_PATH)/$(FILE)
 #
-#tp2.o: src/tp2.c
-#	gcc -c src/tp2.c
+#
 
+exe: test.o input.o countries.o
+	gcc -o exe test.o input.o countries.o -ljansson
+	rm -f *.o
+test.o: test.c
+	gcc -c test.c
 
-$(FILE): $(FILE).o
-	gcc -o $(EXEC_PATH)/$(FILE) $(FILE).o
-	mv *.o $(EXEC_PATH)
+input.o: input.c
+	gcc -c input.c
 
-$(FILE).o: $(SRC_PATH)/$(FILE).c
-	gcc $(CFLAGES) -c $(SRC_PATH)/$(FILE).c
-
-.PHONY: clean
-
-clean:
-		rm -f $(EXEC_PATH)/*.o
-		rm -f $(EXEC_PATH)/$(FILE)
+countries.o: countries.c
+	gcc -c countries.c
