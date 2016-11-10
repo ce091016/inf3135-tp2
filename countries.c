@@ -35,12 +35,12 @@
 }*/
 
     
-json_t* countries_getJsonObjectFromCountry(char *code, json_t *tabPays) {
+json_t *countries_getJsonObjectFromCountry(char *code, json_t *tabPays) {
     json_t * returnObj;
     int i;
     for(i = 0; i < json_array_size(tabPays); i++) {
         json_t *data = json_array_get(tabPays, i);
-        json_t *codePays = json_object_get(data, "cca3");
+        const char *codePays = countries_getCode(data);
         char codeParam[4];
         strcpy(codeParam, code);
         int longueurCode = strlen(codeParam);
@@ -48,12 +48,18 @@ json_t* countries_getJsonObjectFromCountry(char *code, json_t *tabPays) {
         for (j = 0; j<longueurCode; j++) {
             codeParam[j] = toupper(codeParam[j]);
         }
-        if (strcmp(codeParam, json_string_value(codePays))==0) {
+        if (strcmp(codeParam, codePays)==0) {
             returnObj = data;
             break;
         }
     }
     return returnObj;
+}
+
+const char * countries_getCode(json_t *pays) {
+    json_t * code = json_object_get(pays, "cca3");
+    const char * codeRetour = json_string_value(code);
+    return codeRetour;
 }
 
 const char * countries_getNomPays(json_t *pays) {
@@ -73,9 +79,8 @@ const char * countries_getFrontieres(json_t *pays) {
     int i;
     for (i=0; i<json_array_size(frontieres); i++) {
         const char * frontTemp = json_string_value(json_array_get(frontieres, i));
-        printf("%s, ", frontTemp);
+        printf("%s\n", frontTemp);
     }
-    printf("\n");
 }
 
 const char * countries_getLangues(json_t *pays) {
