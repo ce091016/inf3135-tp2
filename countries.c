@@ -114,45 +114,18 @@ const char * countries_region(json_t *pays) {
     return json_string_value(region);
 }
 
-json_t ** countries_paysSelonRegion(json_t *tabPays, char *region) {
-    int capacite = 27;
-    json_t **tabPaysRegion = malloc(sizeof(json_t *) * capacite);
-    int nbElements = 0;
+json_t * countries_paysSelonRegion(json_t *tabPays, char *region) {
+    json_t *tabPaysRegion = json_array(); //je pense que l'allocation dynamique se fait toute seule
     int i;
     for (i=0; i<json_array_size(tabPays); i++) {
         json_t *paysTemp = json_array_get(tabPays, i);
         if (strcmp(countries_region(paysTemp),region) == 0) {
-            if (nbElements >= capacite) {
-                tabPaysRegion = realloc(tabPaysRegion, sizeof(json_t *) * (capacite * 2));
-                capacite = capacite * 2;
-            }
-
-            *(tabPaysRegion + nbElements)= paysTemp;
-
-            nbElements++;
-           // printf("nbElements : %d\n", nbElements);
+            json_array_append(tabPaysRegion, paysTemp);                
         }
     }
     return tabPaysRegion;
-    //retourner un tableau de pointeurs vers les pays qui
-    //font partie d'une région
 }
 
 //a faire: changer les noms getLangues et getFrontieres pour printLangues...
 //changer get Capitale et getNom pour countries_Capitale et countries_Nom
 
-//ma strategie presentement est d'aller chercher les objets dont je veux connaitre
-//certaines informations et appeler des methodes retournant les informations sur
-//ces objets. 
-//Une strategie alternative serait de parcourir le tableau de tous les objets, et 
-//d'afficher les informations voulues sur les pays au fur et à mesure. il faudrait
-//cependant pour cela que je puisse indiquer a la fonction quelles informations
-//je veux afficher.
-
-/*pourrait faire un tableau de pays pour --region. Je parcours le tableau
- * de tous les pays, et chaque fois qu'un pays est dans la region voulue
- * j'ajoute l'indice du tableau soit dans une string, soit dans un tableau.
- * Je peux aussi me faire une variable nbPaysRegion qui compte le nombre de pays 
- * dans une region. Ensuite, je crée un tableau qui contient des objets json 
- * de taille nbPaysRegion et j'y mets les pays correspondant aux indices trouves
-*/
