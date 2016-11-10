@@ -13,7 +13,7 @@
 #define SHOW_LANGUAGES 5
 #define SHOW_CAPITAL 6
 #define SHOW_BORDERS 7
-#define SHOW_FLAG
+#define SHOW_FLAG 8
 #define COUNTRY 9
 #define REGION 11
 
@@ -35,23 +35,23 @@ int main(int argc, char *argv[]){
     if(rep[COUNTRY] != NULL){
         test = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
         printf("Name : %s\n",countries_getNomPays(test));
+        printf("Code : \n");
+    }
+    if(rep[SHOW_CAPITAL] != NULL){
+        printf("Capital : %s\n",countries_getCapitale(test));
     }
     if(rep[SHOW_LANGUAGES] != NULL){
         printf("Langues: ");
         countries_getLangues(test);
     }
-    if(rep[SHOW_CAPITAL] != NULL){
-        printf("Capital : %s\n",countries_getCapitale(test));
     
-    }
     if(rep[SHOW_BORDERS] != NULL){
-    
+        printf("Borders : ");
+        countries_getFrontieres(test); 
     }
     if(rep[SHOW_FLAG] != NULL){
+    
     }
-    if()
-
-
 
 
     free(rep);
