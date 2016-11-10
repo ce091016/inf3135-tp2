@@ -24,11 +24,8 @@ int main(int argc, char *argv[]){
     json_t *root = json_load_file("data/countries/countries.json",0,&error);
     json_t *test;
     json_t *values;
-    bool unPays = false;
+    bool onlyOnCountry = false;
     int i = 0;
-    const char *chaine;
-    void *iter;
-    char *string;
     char **rep = (char**)calloc(TAILLE_MAX + 1, sizeof(char*));
     
     input(argc, argv, rep);
@@ -39,7 +36,7 @@ int main(int argc, char *argv[]){
     } 
     if(rep[COUNTRY] != NULL){
         test = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
-        unPays = true;
+        onlyOnCountry = true;
     }else if(rep[REGION] != NULL){
         values = countries_paysSelonRegion(root,rep[REGION + 1]);
     }else{
@@ -47,7 +44,7 @@ int main(int argc, char *argv[]){
     }
 
     do  {
-       if(!unPays) test = json_array_get(values,i);
+       if(!onlyOnCountry) test = json_array_get(values,i);
         printf("Name : %s\n",countries_getNomPays(test));
         printf("Code : %s\n",countries_getCode(test));
     
@@ -71,6 +68,7 @@ int main(int argc, char *argv[]){
 
     
 
+    if(rep[REGION] != NULL && rep[COUNTRY] != NULL) printf("Option '--country' activated; option '--region' ignored.\n");
     printf("%d\n",i);
     free(rep);
 

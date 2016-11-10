@@ -79,8 +79,9 @@ const char * countries_getFrontieres(json_t *pays) {
     int i;
     for (i=0; i<json_array_size(frontieres); i++) {
         const char * frontTemp = json_string_value(json_array_get(frontieres, i));
-        printf("%s\n", frontTemp);
+        printf("%s, ", frontTemp);
     }
+    printf("\n");
 }
 
 const char * countries_getLangues(json_t *pays) {

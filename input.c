@@ -81,8 +81,8 @@ void input(int argc, char *argv[],char *rep[]){
                 break;
 
             case '?':
-                exit(0);
-                break;
+                printf("Try using 'bin/tp2 --help' for more information.\n");
+                exit(1);
 
             default:
                 abort();
@@ -90,10 +90,11 @@ void input(int argc, char *argv[],char *rep[]){
     }
 
     if(optind < argc){
-        printf("non-option ARGV-elements: ");
+        printf("Invalid option.\n");
         while(optind < argc){
             printf("%s ", argv[optind++]);
             putchar('\n');
+            printf("Try using 'bin/tp2 --help' for more information.\n");
         }
 
         exit(0);
