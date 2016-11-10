@@ -7,12 +7,6 @@
 
 static int option_flag;
 
-/*
-int main(){
-    return 0;
-}
-*/
-
 void input(int argc, char *argv[],char *rep[]){
     int c;
     while(true){
@@ -87,7 +81,6 @@ void input(int argc, char *argv[],char *rep[]){
                 break;
 
             case '?':
-                printf("Try 'bin/tp2 --help' for more information.\n");
                 exit(0);
                 break;
 
@@ -95,12 +88,12 @@ void input(int argc, char *argv[],char *rep[]){
                 abort();
         }
     }
+
     if(optind < argc){
         printf("non-option ARGV-elements: ");
         while(optind < argc){
             printf("%s ", argv[optind++]);
             putchar('\n');
-            exit(0);
         }
 
         exit(0);
