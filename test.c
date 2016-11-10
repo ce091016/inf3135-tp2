@@ -1,6 +1,7 @@
 #include<jansson.h>
 #include<stdio.h>
 #include<stdlib.h>
+#include<stdbool.h>
 #include<string.h>
 #include<ctype.h>
 #include"input.h"
@@ -23,7 +24,7 @@ int main(int argc, char *argv[]){
     json_t *root = json_load_file("data/countries/countries.json",0,&error);
     json_t *test;
     json_t *values;
-    json_t *langues;
+    bool unPays = false;
     int i = 0;
     const char *chaine;
     void *iter;
@@ -38,13 +39,17 @@ int main(int argc, char *argv[]){
     } 
     if(rep[COUNTRY] != NULL){
         test = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
+        unPays = true;
     }else if(rep[REGION] != NULL){
         values = countries_paysSelonRegion(root,rep[REGION + 1]);
+    }else{
+        values = root;
     }
-    while(rep[COUNTRY] == NULL && (json_is_object(values + i))){
 
+    do  {
+       if(!unPays) test = json_array_get(values,i);
         printf("Name : %s\n",countries_getNomPays(test));
-        printf("Code : \n");
+        printf("Code : %s\n",countries_getCode(test));
     
         if(rep[SHOW_CAPITAL] != NULL){
             printf("Capital : %s\n",countries_getCapitale(test));
@@ -61,9 +66,12 @@ int main(int argc, char *argv[]){
         if(rep[SHOW_FLAG] != NULL){
     
         }
-    }
+        i++;
+    }while(i < json_array_size(values) && rep[COUNTRY] == NULL);
 
+    
 
+    printf("%d\n",i);
     free(rep);
 
 
