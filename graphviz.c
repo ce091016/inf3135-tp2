@@ -8,10 +8,13 @@
 
 
 #define DEBUTGRAPH "graph {\n"
+#define FINGRAPH "}\n"
 #define DEBUTPAYS "    " 
 #define DEBUTPAYS2 " [\n"
+#define FINPAYS "    ];\n"
 #define SHAPE "        shape = none\n"
 #define LABEL "        label = <<table border=\"0\" cellspacing=\"0\">\n"
+#define LABELFIN "        </table>>\n"
 #define TRTDIMAGE "            <tr><td align=\"center\" border=\"1\" fixedsize=\"true\" width=\"200\" height=\"100\">\n"
 #define TRTDIMAGE2 "              <img src=\""
 #define TRTDIMAGE3 ".png\" scale=\"true\"/>\n"
@@ -28,11 +31,9 @@
 //        
 //}
 
-void graphviz_ecrireUnPays(int langues, int capitale, int frontieres, int flag, char * codePays, json_t *tabPays) {
+void graphviz_ecrireUnPays(int langues, int capitale, int frontieres, int flag, char * codePays, json_t *tabPays, FILE * graphviz) {
     
     json_t * pays = countries_getJsonObjectFromCountry(codePays, tabPays);
-    FILE * graphviz = fopen("graphviz.dot", "w");
-    fputs(DEBUTGRAPH, graphviz); 
     fprintf(graphviz, "%s%s%s", DEBUTPAYS, codePays, DEBUTPAYS2);
     fprintf(graphviz, "%s%s", SHAPE, LABEL);
     if (flag == 1) {
@@ -54,9 +55,32 @@ void graphviz_ecrireUnPays(int langues, int capitale, int frontieres, int flag, 
         }
         fprintf(graphviz, "%s", FINTRTD);
     }
+    if (frontieres == 1) {
+        fprintf(graphviz, "%s", TRTDBORDERS);
+        json_t *frontieres = countries_frontieres(pays);
+        if (json_array_size(frontieres) > 0) {
+            fprintf(graphviz, "%s", json_string_value(json_array_get(frontieres,0)));
+        }
+        int i=1;
+        while (i<json_array_size(frontieres)) {
+            fprintf(graphviz, ", %s", json_string_value(json_array_get(frontieres,i)));
+            i++;
+        }
+        fprintf(graphviz, "%s", FINTRTD);
 
+    }
+    fprintf(graphviz, "%s%s", LABELFIN, FINPAYS);
+}
 
+void graphviz_ecrireUnSeulPays(int langues, int capitale, int frontieres, int flag, char * codePays, json_t *tabPays) {
+    FILE * graphviz = fopen("graphviz.dot", "w");
+    fprintf(graphviz, "%s", DEBUTGRAPH);
+    graphviz_ecrireUnPays(langues, capitale, frontieres, flag, codePays, tabPays, graphviz);    
+    fprintf(graphviz, "%s", FINGRAPH);
     fclose(graphviz);
 }
 
 //pourquoi ne pas seulement passer le pays en paramètres?
+//
+//A FAIRE: 
+//prendre le code de ecrireUnPays et le séparer en sous-fonctions
