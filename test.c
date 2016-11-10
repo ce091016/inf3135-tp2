@@ -1,11 +1,12 @@
-#include<jansson.h>
-#include<stdio.h>
-#include<stdlib.h>
-#include<stdbool.h>
-#include<string.h>
-#include<ctype.h>
-#include"input.h"
-#include"countries.h"
+#include <jansson.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <ctype.h>
+#include "input.h"
+#include "countries.h"
+#include "graphviz.h"
 
 #define TAILLE_MAX 12
 #define HELP 0
@@ -18,33 +19,83 @@
 #define COUNTRY 9
 #define REGION 11
 
-void textOutput(char **rep);
+void textOutput(char **rep, char *filename);
+void dotOutput(char **rep, char *filename);
 void help();
 
 int main(int argc, char *argv[]){
     char **rep = (char**)calloc(TAILLE_MAX + 1, sizeof(char*)); 
     input(argc, argv, rep);
-    textOutput(rep);
+    if(rep[OUTPUT_FORMAT] != NULL){
+        dotOutput(rep,NULL);
+    }else{
+        textOutput(rep,NULL);
+    }
     free(rep);
     return 0;
 }
 
-void textOutput(char **rep){
+void dotOutput(char **rep, char *filename){
+    json_error_t error;
+    json_t *root = json_load_file("data/countries/countries.json",0,&error);
+    json_t *test;
+    json_t *values;
+    int langues;
+    int capitale;
+    int frontieres;
+    int flag;
+    bool onlyOneCountry = false;
+   // int i = 0;
+    if(rep[HELP] != NULL){
+        help();
+        exit(0);
+    } 
+    
+    if(rep[COUNTRY] != NULL){
+        test = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
+        onlyOneCountry = true;
+    }else if(rep[REGION] != NULL){
+        values = countries_paysSelonRegion(root,rep[REGION + 1]);
+    }else{
+        values = root;
+    }
+
+    //do  {
+     //   if(!onlyOneCountry) test = json_array_get(values,i);
+        
+    
+        if(rep[SHOW_CAPITAL] != NULL){
+            capitale = 1;
+        }
+        if(rep[SHOW_LANGUAGES] != NULL){
+            langues = 1;
+        }
+        if(rep[SHOW_BORDERS] != NULL){
+            frontieres = 1;
+        }
+        
+        if(onlyOneCountry) graphviz_ecrireUnSeulPays(langues,capitale,frontieres,flag,test);
+        if(!onlyOneCountry) graphviz_ecrirePlusieursPays(langues,capitale,frontieres,flag,values);
+      //  i++;
+    //}while(rep[COUNTRY] == NULL && i < json_array_size(values));
+
+    
+
+    if(rep[REGION] != NULL && rep[COUNTRY] != NULL) printf("Option '--country' activated; option '--region' ignored.\n");
+}
+
+void textOutput(char **rep, char *filename){
     json_error_t error;
     json_t *root = json_load_file("data/countries/countries.json",0,&error);
     json_t *test;
     json_t *values;
     bool onlyOneCountry = false;
     int i = 0;
-    if(rep[HELP != NULL]){
+    if(rep[HELP] != NULL){
         help();
         exit(0);
     } 
-    if(rep[OUTPUT_FORMAT] != NULL){
-        if(rep[OUTPUT_FILENAME] != NULL){
-        
-        }
-    } 
+    
     if(rep[COUNTRY] != NULL){
         test = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
         onlyOneCountry = true;
@@ -71,9 +122,6 @@ void textOutput(char **rep){
         if(rep[SHOW_BORDERS] != NULL){
             printf("Borders : ");
             countries_getFrontieres(test); 
-        }
-        if(rep[SHOW_FLAG] != NULL){
-    
         }
         i++;
     }while(rep[COUNTRY] == NULL && i < json_array_size(values));
