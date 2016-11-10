@@ -87,6 +87,8 @@ void input(int argc, char *argv[],char *rep[]){
                 break;
 
             case '?':
+                printf("Try 'bin/tp2 --help' for more information.\n");
+                exit(0);
                 break;
 
             default:
@@ -98,6 +100,7 @@ void input(int argc, char *argv[],char *rep[]){
         while(optind < argc){
             printf("%s ", argv[optind++]);
             putchar('\n');
+            exit(0);
         }
 
         exit(0);

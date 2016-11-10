@@ -20,37 +20,47 @@
 
 int main(int argc, char *argv[]){
     json_error_t error;
-    json_t *root;
-    root = json_load_file("data/countries/countries.json",0,&error);
+    json_t *root = json_load_file("data/countries/countries.json",0,&error);
     json_t *test;
-    json_t *value;
+    json_t *values;
     json_t *langues;
+    int i = 0;
     const char *chaine;
     void *iter;
     char *string;
     char **rep = (char**)calloc(TAILLE_MAX + 1, sizeof(char*));
     
     input(argc, argv, rep);
-    
+    if(rep[OUTPUT_FORMAT] != NULL){
+        if(rep[OUTPUT_FILENAME] != NULL){
+        
+        }
+    } 
     if(rep[COUNTRY] != NULL){
         test = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
+    }else if(rep[REGION] != NULL){
+        values = countries_paysSelonRegion(root,rep[REGION + 1]);
+    }
+    while(rep[COUNTRY] == NULL && (json_is_object(values + i))){
+
         printf("Name : %s\n",countries_getNomPays(test));
         printf("Code : \n");
-    }
-    if(rep[SHOW_CAPITAL] != NULL){
-        printf("Capital : %s\n",countries_getCapitale(test));
-    }
-    if(rep[SHOW_LANGUAGES] != NULL){
-        printf("Langues: ");
-        countries_getLangues(test);
-    }
     
-    if(rep[SHOW_BORDERS] != NULL){
-        printf("Borders : ");
-        countries_getFrontieres(test); 
-    }
-    if(rep[SHOW_FLAG] != NULL){
+        if(rep[SHOW_CAPITAL] != NULL){
+            printf("Capital : %s\n",countries_getCapitale(test));
+        }
+        if(rep[SHOW_LANGUAGES] != NULL){
+            printf("Langues: ");
+            countries_getLangues(test);
+        }
     
+        if(rep[SHOW_BORDERS] != NULL){
+            printf("Borders : ");
+            countries_getFrontieres(test); 
+        }
+        if(rep[SHOW_FLAG] != NULL){
+    
+        }
     }
 
 
