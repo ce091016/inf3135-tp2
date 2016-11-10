@@ -7,12 +7,6 @@
 
 static int option_flag;
 
-/*
-int main(){
-    return 0;
-}
-*/
-
 void input(int argc, char *argv[],char *rep[]){
     int c;
     while(true){
@@ -87,12 +81,14 @@ void input(int argc, char *argv[],char *rep[]){
                 break;
 
             case '?':
+                exit(0);
                 break;
 
             default:
                 abort();
         }
     }
+
     if(optind < argc){
         printf("non-option ARGV-elements: ");
         while(optind < argc){

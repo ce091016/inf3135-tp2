@@ -1,0 +1,79 @@
+#include<jansson.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+#include<string.h>
+#include<ctype.h>
+#include"input.h"
+#include"countries.h"
+
+#define TAILLE_MAX 12
+#define HELP 0
+#define OUTPUT_FORMAT 1
+#define OUTPUT_FILENAME 3
+#define SHOW_LANGUAGES 5
+#define SHOW_CAPITAL 6
+#define SHOW_BORDERS 7
+#define SHOW_FLAG 8
+#define COUNTRY 9
+#define REGION 11
+
+
+int main(int argc, char *argv[]){
+    json_error_t error;
+    json_t *root = json_load_file("data/countries/countries.json",0,&error);
+    json_t *test;
+    json_t *values;
+    bool unPays = false;
+    int i = 0;
+    const char *chaine;
+    void *iter;
+    char *string;
+    char **rep = (char**)calloc(TAILLE_MAX + 1, sizeof(char*));
+    
+    input(argc, argv, rep);
+    if(rep[OUTPUT_FORMAT] != NULL){
+        if(rep[OUTPUT_FILENAME] != NULL){
+        
+        }
+    } 
+    if(rep[COUNTRY] != NULL){
+        test = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
+        unPays = true;
+    }else if(rep[REGION] != NULL){
+        values = countries_paysSelonRegion(root,rep[REGION + 1]);
+    }else{
+        values = root;
+    }
+
+    do  {
+       if(!unPays) test = json_array_get(values,i);
+        printf("Name : %s\n",countries_getNomPays(test));
+        printf("Code : %s\n",countries_getCode(test));
+    
+        if(rep[SHOW_CAPITAL] != NULL){
+            printf("Capital : %s\n",countries_getCapitale(test));
+        }
+        if(rep[SHOW_LANGUAGES] != NULL){
+            printf("Langues: ");
+            countries_getLangues(test);
+        }
+    
+        if(rep[SHOW_BORDERS] != NULL){
+            printf("Borders : ");
+            countries_getFrontieres(test); 
+        }
+        if(rep[SHOW_FLAG] != NULL){
+    
+        }
+        i++;
+    }while(i < json_array_size(values) && rep[COUNTRY] == NULL);
+
+    
+
+    printf("%d\n",i);
+    free(rep);
+
+
+    return 0;
+}
