@@ -27,7 +27,13 @@ int main(int argc, char *argv[]){
     char **rep = (char**)calloc(TAILLE_MAX + 1, sizeof(char*)); 
     input(argc, argv, rep);
     if(rep[OUTPUT_FORMAT] != NULL){
-        dotOutput(rep,NULL);
+       if(strcmp(rep[OUTPUT_FORMAT + 1],"dot") == 0){
+           dotOutput(rep,NULL);
+       }else if(strcmp(rep[OUTPUT_FORMAT + 1],"text") == 0){
+           printf("Dans un fichier\n");
+       }else{
+        printf("Invalid file format.\n");
+       }
     }else{
         textOutput(rep,NULL);
     }
