@@ -84,6 +84,28 @@ const char * countries_getFrontieres(json_t *pays) {
     printf("\n");
 }
 
+const char * countries_frontieres2(json_t *pays) {
+    json_t *frontieres = countries_frontieres(pays);
+    int nbCaracteres = 0;
+    int nbFrontieres = 0;
+    if (json_array_size(frontieres) == 0) {
+        return "";
+    } else {
+        int i;
+        nbFrontieres = json_array_size(frontieres);
+        nbCaracteres += (nbFrontieres * 3) + (nbFrontieres - 1)*2 + 1;
+        char frontieresRetour[nbCaracteres];
+        sprintf(frontieresRetour,"%s", json_string_value(json_array_get(frontieres,0)));
+        for (i=1; i<nbFrontieres; i++) {
+            sprintf(frontieresRetour + strlen(frontieresRetour), ", ");
+            sprintf(frontieresRetour + strlen(frontieresRetour), "%s", json_string_value(json_array_get(frontieres,i)));
+        }
+        const char * retour = frontieresRetour;
+        printf("frontieres : %s\n", frontieresRetour);
+        return retour;
+    }
+}
+
 const char * countries_getLangues(json_t *pays) {
     json_t * langues = json_object_get(pays,"languages");
     void * iter = json_object_iter(langues);
