@@ -19,31 +19,37 @@
 #define COUNTRY 9
 #define REGION 11
 
-void textOutput(char **rep, char *filename);
-void dotOutput(char **rep, char *filename);
+void stdoutOutput(char **rep, char *filename, json_t *root);
+void dotOutput(char **rep, char *filename, json_t *root);
 void help();
 
 int main(int argc, char *argv[]){
+    json_error_t error;
+    json_t *root = json_load_file("data/countries/countries.json",0,&error);
     char **rep = (char**)calloc(TAILLE_MAX + 1, sizeof(char*)); 
     input(argc, argv, rep);
+    char *filename; 
+    
     if(rep[OUTPUT_FORMAT] != NULL){
-       if(strcmp(rep[OUTPUT_FORMAT + 1],"dot") == 0){
-           dotOutput(rep,NULL);
+        if(rep[OUTPUT_FILENAME + 1] != NULL){
+            filename = rep[OUTPUT_FILENAME + 1];
+        }
+        if(strcmp(rep[OUTPUT_FORMAT + 1],"dot") == 0){
+           dotOutput(rep,NULL,root);
        }else if(strcmp(rep[OUTPUT_FORMAT + 1],"text") == 0){
-           printf("Dans un fichier\n");
+           stdoutOutput(rep,NULL,root);
+           printf("Dans le fichier : %s\n",filename);
        }else{
         printf("Invalid file format.\n");
        }
     }else{
-        textOutput(rep,NULL);
+        stdoutOutput(rep,NULL,root);
     }
     free(rep);
     return 0;
 }
 
-void dotOutput(char **rep, char *filename){
-    json_error_t error;
-    json_t *root = json_load_file("data/countries/countries.json",0,&error);
+void dotOutput(char **rep, char *filename, json_t *root){
     json_t *test;
     json_t *values;
     int langues;
@@ -51,7 +57,7 @@ void dotOutput(char **rep, char *filename){
     int frontieres;
     int flag;
     bool onlyOneCountry = false;
-   // int i = 0;
+    
     if(rep[HELP] != NULL){
         help();
         exit(0);
@@ -66,33 +72,26 @@ void dotOutput(char **rep, char *filename){
         values = root;
     }
 
-    //do  {
-     //   if(!onlyOneCountry) test = json_array_get(values,i);
+    if(rep[SHOW_CAPITAL] != NULL){
+        capitale = 1;
+    }
+    if(rep[SHOW_LANGUAGES] != NULL){
+        langues = 1;
+    }
+    if(rep[SHOW_BORDERS] != NULL){
+        frontieres = 1;
+    }
+    if(rep[SHOW_FLAG] != NULL){
+        flag = 1;
+    }
         
-    
-        if(rep[SHOW_CAPITAL] != NULL){
-            capitale = 1;
-        }
-        if(rep[SHOW_LANGUAGES] != NULL){
-            langues = 1;
-        }
-        if(rep[SHOW_BORDERS] != NULL){
-            frontieres = 1;
-        }
-        
-        if(onlyOneCountry) graphviz_ecrireUnSeulPays(langues,capitale,frontieres,flag,test);
-        if(!onlyOneCountry) graphviz_ecrirePlusieursPays(langues,capitale,frontieres,flag,values);
-      //  i++;
-    //}while(rep[COUNTRY] == NULL && i < json_array_size(values));
-
-    
+    if(onlyOneCountry) graphviz_ecrireUnSeulPays(langues,capitale,frontieres,flag,test);
+    if(!onlyOneCountry) graphviz_ecrirePlusieursPays(langues,capitale,frontieres,flag,values);
 
     if(rep[REGION] != NULL && rep[COUNTRY] != NULL) printf("Option '--country' activated; option '--region' ignored.\n");
 }
 
-void textOutput(char **rep, char *filename){
-    json_error_t error;
-    json_t *root = json_load_file("data/countries/countries.json",0,&error);
+void stdoutOutput(char **rep, char *filename, json_t *root){
     json_t *test;
     json_t *values;
     bool onlyOneCountry = false;

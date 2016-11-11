@@ -1,3 +1,6 @@
 [submodule "data/countries"]
 	path = data/countries
 	url = https://github.com/ablondin/countries
+[submodule "countries"]
+	path = countries
+	url = https://github.com/ablondin/countries.git
