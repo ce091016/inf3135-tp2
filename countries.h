@@ -12,7 +12,11 @@ const char * countries_getNomPays(json_t * pays);
 const char * countries_getCapitale(json_t * pays);
  
 const char * countries_getFrontieres(json_t * pays);
- 
+
+const char * countries_frontieres2(json_t * pays, char *chaine);
+
+int countries_nbCaracteresFrontieres(json_t *pays);
+
 const char * countries_getLangues(json_t * pays);
 
 int countries_nbLangues(json_t * pays);

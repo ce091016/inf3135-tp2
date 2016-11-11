@@ -19,34 +19,105 @@
 #define COUNTRY 9
 #define REGION 11
 
-void stdoutOutput(char **rep, char *filename, json_t *root);
+void stdoutOutput(char **rep, json_t *root);
 void dotOutput(char **rep, char *filename, json_t *root);
+void textOutput(char **rep, char *filename, json_t *root);
+void producePng(char **rep, char *filename, json_t *root);
 void help();
 
 int main(int argc, char *argv[]){
     json_error_t error;
     json_t *root = json_load_file("data/countries/countries.json",0,&error);
+    char *filename;
+    bool hasName = false;
     char **rep = (char**)calloc(TAILLE_MAX + 1, sizeof(char*)); 
     input(argc, argv, rep);
-    char *filename; 
     
     if(rep[OUTPUT_FORMAT] != NULL){
         if(rep[OUTPUT_FILENAME + 1] != NULL){
             filename = rep[OUTPUT_FILENAME + 1];
+            hasName = true;
         }
-        if(strcmp(rep[OUTPUT_FORMAT + 1],"dot") == 0){
-           dotOutput(rep,NULL,root);
-       }else if(strcmp(rep[OUTPUT_FORMAT + 1],"text") == 0){
-           stdoutOutput(rep,NULL,root);
-           printf("Dans le fichier : %s\n",filename);
+        if(strcmp(rep[OUTPUT_FORMAT + 1], "dot") == 0){
+           dotOutput(rep,filename,root);
+       }else if(strcmp(rep[OUTPUT_FORMAT + 1], "text") == 0){
+           stdoutOutput(rep,root);
+           if(hasName) textOutput(rep,filename,root);
+       }else if(strcmp(rep[OUTPUT_FORMAT + 1], "png") == 0){
+            if(rep[OUTPUT_FILENAME + 1] != NULL){
+                producePng(rep,filename,root);
+            }else{
+                printf("Filename required for 'png' format.\n");
+                exit(1);
+            }
        }else{
         printf("Invalid file format.\n");
+        exit(1);
        }
     }else{
-        stdoutOutput(rep,NULL,root);
+        stdoutOutput(rep,root);
     }
     free(rep);
     return 0;
+}
+
+void producePng(char **rep, char *filename, json_t *root){
+    dotOutput(rep,filename,root);
+    system("neato -Goverlap=false -Tpng -o canada.png graphviz.dot");
+    system("rm -f *.dot");
+}
+void textOutput(char **rep, char *filename, json_t *root){
+    json_t *test;
+    json_t *values;
+    bool onlyOneCountry = false;
+    int i = 0;
+    FILE *file = fopen(filename,"w");
+    if(file == NULL){
+        printf("File opening error.\n");
+        exit(1);
+    }
+    
+    if(rep[HELP] != NULL){
+        help();
+        exit(0);
+    } 
+    
+    if(rep[COUNTRY] != NULL){
+        test = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
+        onlyOneCountry = true;
+    }else if(rep[REGION] != NULL){
+        values = countries_paysSelonRegion(root,rep[REGION + 1]);
+    }else{
+        values = root;
+    }
+
+    do  {
+        if(!onlyOneCountry) test = json_array_get(values,i);
+        
+        fprintf(file, "Name : %s\n",countries_getNomPays(test));
+        fprintf(file, "Code : %s\n",countries_getCode(test));
+    
+        if(rep[SHOW_CAPITAL] != NULL){
+            fprintf(file, "Capital : %s\n",countries_getCapitale(test));
+        }
+        if(rep[SHOW_LANGUAGES] != NULL){
+            fprintf(file, "Langues: ");
+            countries_getLangues(test);
+        }
+    
+        if(rep[SHOW_BORDERS] != NULL){
+            char *langues = (char*)malloc(sizeof(char)*countries_nbCaracteresFrontieres(test));
+            printf("Borders : %s\n",countries_frontieres2(test, langues));
+            fprintf(file, "Borders : %s",countries_frontieres2(test, langues));
+            free(langues);
+        }
+        i++;
+    }while(rep[COUNTRY] == NULL && i < json_array_size(values));
+    fclose(file);
+    
+
+    if(rep[REGION] != NULL && rep[COUNTRY] != NULL) printf("Option '--country' activated; option '--region' ignored.\n");
+
 }
 
 void dotOutput(char **rep, char *filename, json_t *root){
@@ -91,7 +162,7 @@ void dotOutput(char **rep, char *filename, json_t *root){
     if(rep[REGION] != NULL && rep[COUNTRY] != NULL) printf("Option '--country' activated; option '--region' ignored.\n");
 }
 
-void stdoutOutput(char **rep, char *filename, json_t *root){
+void stdoutOutput(char **rep, json_t *root){
     json_t *test;
     json_t *values;
     bool onlyOneCountry = false;
