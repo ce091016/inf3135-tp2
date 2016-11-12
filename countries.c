@@ -25,13 +25,14 @@
     printf("nombre de pays : %d\n", j);
     json_t * test;
     //trouver un pays par son code
-    test = countries_getJsonObjectFromCountry("afg", root);
+    test = countries_getJsonObjectFromCountry("can", root);
     //test fonctions get
     printf("get nom : %s\n", countries_getNomPays(test));
     printf("get capitale : %s\n", countries_getCapitale(test));
     countries_getLangues(test);
     countries_getFrontieres(test);
     printf("nbLangues : %d\n", countries_nbLangues(test));
+    printf("nbCaracteresLangues : %d\n", countries_nbCaracteresLangues(test));
 }*/
 
     
@@ -74,62 +75,35 @@ const char * countries_getCapitale(json_t *pays) {
     return capitaleRetour;
 }
 
-const char * countries_getFrontieres(json_t *pays) {
-    json_t * frontieres = json_object_get(pays, "borders");
-    int i;
-    for (i=0; i<json_array_size(frontieres); i++) {
-        const char * frontTemp = json_string_value(json_array_get(frontieres, i));
-        printf("%s, ", frontTemp);
-    }
-    printf("\n");
-}
-
 int countries_nbCaracteresFrontieres(json_t *pays){
     json_t *frontieres = countries_frontieres(pays);
-    int nbFrontieres = json_array_size(frontieres);
-    int nbCaracteres = (nbFrontieres * 3) + (nbFrontieres - 1)*2 + 1;
-    return nbCaracteres;
+    if (json_is_array(frontieres)) {
+        if (json_array_size(frontieres) == 0) {
+            return 2;
+        }
+        int nbFrontieres = json_array_size(frontieres);
+        int nbCaracteres = (nbFrontieres * 3) + (nbFrontieres - 1)*2 + 1;
+        return nbCaracteres;
+
+    } else {
+        printf("WTF AUSTRALIA");
+        return 2;
+    }
 }
 
-const char * countries_frontieres2(json_t *pays, char *chaine) {
+void countries_frontieres2(json_t *pays, char *chaine) {
     json_t *frontieres = countries_frontieres(pays);
     int nbFrontieres = json_array_size(frontieres);
-    
-    if (json_array_size(frontieres) == 0) {
-        return "";
-    } else {
+    if (json_array_size(frontieres) > 0){ 
         int i;
         sprintf(chaine,"%s", json_string_value(json_array_get(frontieres,0)));
         for (i=1; i<nbFrontieres; i++) {
             sprintf(chaine + strlen(chaine), ", ");
             sprintf(chaine + strlen(chaine), "%s", json_string_value(json_array_get(frontieres,i)));
         }
-        const char * retour = chaine;
-        return retour;
+    } else {
+        sprintf(chaine, " ");
     }
-}
-
-const char * countries_getLangues(json_t *pays) {
-    json_t * langues = json_object_get(pays,"languages");
-    void * iter = json_object_iter(langues);
-    json_t * langueTemp = json_object_iter_value(iter);
-    const char * langueTempChaine = json_string_value(langueTemp);
-    char languesRetour[1024];
-//    strcpy(languesRetour, langueTempChaine);
-
-    iter = json_object_iter_next(langues, iter);
-    printf("%s", langueTempChaine);
-    while (iter) {
-        langueTemp = json_object_iter_value(iter);
-        langueTempChaine = json_string_value(langueTemp);
-//        strcat(languesRetour, langueTempChaine); 
-        printf(", %s", langueTempChaine);
-        iter = json_object_iter_next(langues, iter);
-    }
-    printf("\n");
-//    char * finChaineLangue = "\0";
-//    strcat(languesRetour, finChaineLangue);
-//    return languesRetour;
 }
 
 int countries_nbCaracteresLangues(json_t *pays) {
@@ -142,14 +116,16 @@ int countries_nbCaracteresLangues(json_t *pays) {
     while (iter) {
         langueTemp = json_object_iter_value(iter);
         nbCaracteres += strlen(json_string_value(langueTemp));
+        iter = json_object_iter_next(langues, iter);
     }
-    nbCaracteres += 2*(countries_nbLangues(pays) -1) + 1;
+    nbCaracteres += 2*(countries_nbLangues(pays)-1 );
+    nbCaracteres += 1;
     return nbCaracteres;
 }
 
 void countries_langues2(json_t *pays, char * chaine) {
     json_t *langues = json_object_get(pays, "languages");
-    void *iter = json_object_iter_value(langues);
+    void *iter = json_object_iter(langues);
     json_t *langueTemp = json_object_iter_value(iter);
     sprintf(chaine, "%s", json_string_value(langueTemp));
     iter = json_object_iter_next(langues, iter);
