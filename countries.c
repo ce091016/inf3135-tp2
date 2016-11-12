@@ -104,9 +104,7 @@ const char * countries_frontieres2(json_t *pays, char *chaine) {
             sprintf(chaine + strlen(chaine), ", ");
             sprintf(chaine + strlen(chaine), "%s", json_string_value(json_array_get(frontieres,i)));
         }
-        sprintf(chaine + strlen(chaine),"\0");
         const char * retour = chaine;
-        printf("frontieres : %s\n", retour);
         return retour;
     }
 }
@@ -132,6 +130,35 @@ const char * countries_getLangues(json_t *pays) {
 //    char * finChaineLangue = "\0";
 //    strcat(languesRetour, finChaineLangue);
 //    return languesRetour;
+}
+
+int countries_nbCaracteresLangues(json_t *pays) {
+    int nbCaracteres=0;
+    json_t *langues = json_object_get(pays, "languages");
+    void * iter = json_object_iter(langues);
+    json_t *langueTemp = json_object_iter_value(iter);
+    nbCaracteres += strlen(json_string_value(langueTemp));
+    iter = json_object_iter_next(langues, iter);
+    while (iter) {
+        langueTemp = json_object_iter_value(iter);
+        nbCaracteres += strlen(json_string_value(langueTemp));
+    }
+    nbCaracteres += 2*(countries_nbLangues(pays) -1) + 1;
+    return nbCaracteres;
+}
+
+void countries_langues2(json_t *pays, char * chaine) {
+    json_t *langues = json_object_get(pays, "languages");
+    void *iter = json_object_iter_value(langues);
+    json_t *langueTemp = json_object_iter_value(iter);
+    sprintf(chaine, "%s", json_string_value(langueTemp));
+    iter = json_object_iter_next(langues, iter);
+    while (iter) {
+        sprintf(chaine + strlen(chaine), ", ");
+        langueTemp = json_object_iter_value(iter);
+        sprintf(chaine + strlen(chaine), "%s", json_string_value(langueTemp));
+        iter = json_object_iter_next(langues, iter);
+    }
 }
 
 json_t * countries_langues(json_t *pays) {

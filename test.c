@@ -101,15 +101,17 @@ void textOutput(char **rep, char *filename, json_t *root){
             fprintf(file, "Capital : %s\n",countries_getCapitale(test));
         }
         if(rep[SHOW_LANGUAGES] != NULL){
-            fprintf(file, "Langues: ");
+
+            char *langues = (char*)malloc(sizeof(char)*countries_nbCaracteresLangues(test));
+            countries_langues2(test, langues);
+            fprintf(file, "Langues: %s", langues);
             countries_getLangues(test);
         }
     
         if(rep[SHOW_BORDERS] != NULL){
-            char *langues = (char*)malloc(sizeof(char)*countries_nbCaracteresFrontieres(test));
-            printf("Borders : %s\n",countries_frontieres2(test, langues));
-            fprintf(file, "Borders : %s",countries_frontieres2(test, langues));
-            free(langues);
+            char *frontieres = (char*)malloc(sizeof(char)*countries_nbCaracteresFrontieres(test));
+            fprintf(file, "Borders : %s",countries_frontieres2(test, frontieres));
+            free(frontieres);
         }
         i++;
     }while(rep[COUNTRY] == NULL && i < json_array_size(values));

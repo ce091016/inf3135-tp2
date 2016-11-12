@@ -19,6 +19,10 @@ int countries_nbCaracteresFrontieres(json_t *pays);
 
 const char * countries_getLangues(json_t * pays);
 
+int countries_nbCaracteresLangues(json_t *pays);
+
+void countries_langues2(json_t *pays, char *chaine);
+
 int countries_nbLangues(json_t * pays);
 
 json_t * countries_langues(json_t *pays); 
