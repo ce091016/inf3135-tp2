@@ -72,6 +72,26 @@ void graphviz_ecrireUnPays(int langues, int capitale, int frontieres, int flag, 
     fprintf(graphviz, "%s%s", LABELFIN, FINPAYS);
 }
 
+void graphviz_ecrirePaysVoisins(json_t *tabPays, FILE * graphviz) {
+    int i;
+    for (i=0; i< json_array_size(tabPays); i++) {
+        json_t *pays = json_array_get(tabPays, i);
+        const char * codePays = countries_getCode(pays);
+        json_t *frontieres = countries_frontieres(pays);
+        if (json_is_array(frontieres)) {
+            if (json_array_size(frontieres) > 0) {
+                int j;
+                for (j=0; j< json_array_size(frontieres); j++) {
+                    const char * codePaysTemp = json_string_value(json_array_get(frontieres, j));
+                    if (strcmp(codePays, codePaysTemp)<0) {
+                        fprintf(graphviz, "    %s -- %s;\n", codePays, json_string_value(json_array_get(frontieres, j)));
+                    }
+                }
+            }
+        }
+    }
+}
+
 void graphviz_ecrireUnSeulPays(int langues, int capitale, int frontieres, int flag, json_t *pays, const char * nomFichier) {
     FILE * graphviz = fopen(nomFichier, "w");
     fprintf(graphviz, "%s", DEBUTGRAPH);
@@ -87,7 +107,9 @@ void graphviz_ecrirePlusieursPays(int langues, int capitale, int frontieres, int
     for (i=0; i< json_array_size(tabPays); i++) {
         graphviz_ecrireUnPays(langues, capitale, frontieres, flag, json_array_get(tabPays, i), graphviz);
     }
+    graphviz_ecrirePaysVoisins(tabPays, graphviz);
     fprintf(graphviz, "%s", FINGRAPH);
+
     fclose(graphviz);
 }
 
@@ -97,4 +119,6 @@ void graphviz_ecrirePlusieursPays(int langues, int capitale, int frontieres, int
 //--prendre le code de ecrireUnPays et le séparer en sous-fonctions
 //--rajouter à la fin de ecrirePlusieursPays les liens entre les pays qui ont des frontières communes
 //--mettre les noms de code en lettre minuscules
-//
+//NOTE : pour la région oceanie, la fct ecrirePaysVoisins n'écrit rien dans le fichier et c'est pcq seulement 1 pays a des frontieres
+//avec un autre pays, et son code est supérieur alphabétiquement au pays avec lequel il a une frontiere. Le pays en question est PNG
+//et a une frontière avec un pays qui ne fait pas partie de sa région. Il faudrait rajouter la vérification que le pays fait partie de la région
