@@ -72,16 +72,16 @@ void graphviz_ecrireUnPays(int langues, int capitale, int frontieres, int flag, 
     fprintf(graphviz, "%s%s", LABELFIN, FINPAYS);
 }
 
-void graphviz_ecrireUnSeulPays(int langues, int capitale, int frontieres, int flag, json_t *pays) {
-    FILE * graphviz = fopen("graphviz.dot", "w");
+void graphviz_ecrireUnSeulPays(int langues, int capitale, int frontieres, int flag, json_t *pays, const char * nomFichier) {
+    FILE * graphviz = fopen(nomFichier, "w");
     fprintf(graphviz, "%s", DEBUTGRAPH);
     graphviz_ecrireUnPays(langues, capitale, frontieres, flag, pays, graphviz);    
     fprintf(graphviz, "%s", FINGRAPH);
     fclose(graphviz);
 }
 
-void graphviz_ecrirePlusieursPays(int langues, int capitale, int frontieres, int flag, json_t *tabPays) {
-    FILE * graphviz = fopen("graphviz.dot", "w");
+void graphviz_ecrirePlusieursPays(int langues, int capitale, int frontieres, int flag, json_t *tabPays, const char * nomFichier) {
+    FILE * graphviz = fopen(nomFichier, "w");
     fprintf(graphviz, "%s", DEBUTGRAPH);
     int i;
     for (i=0; i< json_array_size(tabPays); i++) {

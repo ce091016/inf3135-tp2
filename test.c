@@ -156,8 +156,8 @@ void dotOutput(char **rep, char *filename, json_t *root){
         flag = 1;
     }
         
-    if(onlyOneCountry) graphviz_ecrireUnSeulPays(langues,capitale,frontieres,flag,test);
-    if(!onlyOneCountry) graphviz_ecrirePlusieursPays(langues,capitale,frontieres,flag,values);
+    if(onlyOneCountry) graphviz_ecrireUnSeulPays(langues,capitale,frontieres,flag,test, filename);
+    if(!onlyOneCountry) graphviz_ecrirePlusieursPays(langues,capitale,frontieres,flag,values, filename);
 
     if(rep[REGION] != NULL && rep[COUNTRY] != NULL) printf("Option '--country' activated; option '--region' ignored.\n");
 }
@@ -233,3 +233,4 @@ void help(){
     printf("                             The supported regions are \"africa\", \"americas\",\n");
     printf("                             \"asia\", \"europe\" and \"oceania\".\n");
 }
+
