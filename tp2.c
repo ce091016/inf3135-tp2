@@ -1,53 +1,57 @@
 #include <jansson.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
-
-
+#include "graphviz.h"
+#include "input.h"
+#include "output.h"
 #include "countries.h"
 
+#define TAILLE_MAX 12
+#define HELP 0
+#define OUTPUT_FORMAT 1
+#define OUTPUT_FILENAME 3
+#define SHOW_LANGUAGES 5
+#define SHOW_CAPITAL 6
+#define SHOW_BORDERS 7
+#define SHOW_FLAG 8
+#define COUNTRY 9
+#define REGION 11
+
 int main (int argc, char * argv[]) {
-    json_error_t error;
-    json_t *root;
-    root = json_load_file("data/countries/countries.json", 0, &error);
+     json_error_t error;
+    json_t *root = json_load_file("data/countries/countries.json",0,&error);
+    char *filename;
+    bool hasName = false;
+    char **rep = (char**)calloc(TAILLE_MAX + 1, sizeof(char*)); 
+    input(argc, argv, rep);
     
-    //TEST FONCTION countries_paysSelonRegion
-    int i =0;
-    json_t ** paysOceanie = countries_paysSelonRegion(root,"Oceania");
-    printf("nom premier: %s\n", countries_getNomPays(*(paysOceanie)));
-    printf("nom deuxieme : %s\n", countries_getNomPays(*(paysOceanie+1)));
-    printf("size of : %lu\n", sizeof(paysOceanie));
-    printf("nom 10ieme : %s\n", countries_getNomPays(*(paysOceanie+9)));
-    while (json_is_object(*(paysOceanie+i))) {
-        printf("nom pays : %d : %s\n", i, countries_getNomPays(*(paysOceanie+i)));
-        i++;
+    if(rep[OUTPUT_FORMAT] != NULL){
+        if(rep[OUTPUT_FILENAME + 1] != NULL){
+            filename = rep[OUTPUT_FILENAME + 1];
+            hasName = true;
+        }
+        if(strcmp(rep[OUTPUT_FORMAT + 1], "dot") == 0){
+           dotOutput(rep,filename,root);
+       }else if(strcmp(rep[OUTPUT_FORMAT + 1], "text") == 0){
+           stdoutOutput(rep,root);
+           if(hasName) textOutput(rep,filename,root);
+       }else if(strcmp(rep[OUTPUT_FORMAT + 1], "png") == 0){
+            if(rep[OUTPUT_FILENAME + 1] != NULL){
+                producePng(rep,filename,root);
+            }else{
+                printf("Filename required for 'png' format.\n");
+                exit(1);
+            }
+       }else{
+        printf("Invalid file format.\n");
+        exit(1);
+       }
+    }else{
+        stdoutOutput(rep,root);
     }
-
-    free(paysOceanie);
-
-    //TESTS des fonctions get
-    json_t * test; 
-    test = countries_getJsonObjectFromCountry("afg", root);
-    printf("get nom : %s\n", countries_getNomPays(test));
-    printf("get capitale : %s\n", countries_getCapitale(test));
-    countries_getLangues(test);
-    countries_getFrontieres(test);
-    printf("nb de langues : %d\n", countries_nbLangues(test));
-    printf("region : %s\n", countries_region(test));
-    countries_paysSelonRegion(root, "Oceania");
-
-    //TEST de la fonction countries_langues
-    json_t * langues = countries_langues(test);
-    void * iter = json_object_iter(langues);
-    json_t * value = json_object_iter_value(iter);
-    const char * chaine = json_string_value(value);
-    printf("%s\n", chaine);
-    iter = json_object_iter_next(langues, iter);
-    while (iter) {
-        json_t * value = json_object_iter_value(iter);
-        const char * chaine = json_string_value(value);
-        printf("%s\n", chaine);
-        iter = json_object_iter_next(langues, iter);
-    }
+    free(rep);
+    return 0;
 }

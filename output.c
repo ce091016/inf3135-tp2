@@ -24,7 +24,7 @@ void dotOutput(char **rep, char *filename, json_t *root);
 void textOutput(char **rep, char *filename, json_t *root);
 void producePng(char **rep, char *filename, json_t *root);
 void help();
-
+/*
 int main(int argc, char *argv[]){
     json_error_t error;
     json_t *root = json_load_file("data/countries/countries.json",0,&error);
@@ -60,7 +60,7 @@ int main(int argc, char *argv[]){
     free(rep);
     return 0;
 }
-
+*/
 void producePng(char **rep, char *filename, json_t *root){
     dotOutput(rep,filename,root);
     system("neato -Goverlap=false -Tpng -o canada.png graphviz.dot");
@@ -106,12 +106,14 @@ void textOutput(char **rep, char *filename, json_t *root){
             char *langues = (char*)malloc(sizeof(char)*countries_nbCaracteresLangues(test));
             countries_langues2(test, langues);
             fprintf(file, "Langues: %s", langues);
-            countries_getLangues(test);
+            free(langues);
+            //countries_getLangues(test);
         }
     
         if(rep[SHOW_BORDERS] != NULL){
-            char *frontieres = (char*)malloc(sizeof(char)*countries_nbCaracteresFrontieres(test));
-            fprintf(file, "Borders : %s",countries_frontieres2(test, frontieres));
+            char *frontieres =(char*)malloc(sizeof(char)*countries_nbCaracteresFrontieres(test));
+            countries_frontieres2(test, frontieres);
+            fprintf(file, "Borders : %s", frontieres);
             free(frontieres);
         }
         i++;
@@ -194,13 +196,21 @@ void stdoutOutput(char **rep, json_t *root){
             printf("Capital : %s\n",countries_getCapitale(test));
         }
         if(rep[SHOW_LANGUAGES] != NULL){
-            printf("Langues: ");
-            countries_getLangues(test);
+            
+            char *langues = (char*)malloc(sizeof(char)*countries_nbCaracteresLangues(test));
+            countries_langues2(test, langues);
+            printf("Langues: %s\n", langues);
+            free(langues);
+            //countries_getLangues(test);
         }
     
         if(rep[SHOW_BORDERS] != NULL){
-            printf("Borders : ");
-            countries_getFrontieres(test); 
+            
+            char *frontieres =(char*)malloc(sizeof(char)*countries_nbCaracteresFrontieres(test));
+            countries_frontieres2(test, frontieres);
+            printf("Borders : %s\n", frontieres);
+            free(frontieres);
+            //countries_getFrontieres(test); 
         }
         i++;
     }while(rep[COUNTRY] == NULL && i < json_array_size(values));
