@@ -4,6 +4,8 @@ void graphviz_ecrireUnPays(int langues, int capitale, int frontieres, int flag, 
 
 void graphviz_ecrirePlusieursPays(int langues, int capitale, int frontieres, int flag, json_t *tabPays, const char * nomFichier);
 
+void graphviz_ecrirePaysVoisins(json_t *tabPays, FILE * graphviz); 
+
 
 
 
