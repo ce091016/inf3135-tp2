@@ -36,7 +36,7 @@
 }*/
 
     
-json_t *countries_getJsonObjectFromCountry(char *code, json_t *tabPays) {
+json_t *countries_getJsonObjectFromCountry(const char *code, json_t *tabPays) {
     json_t * returnObj;
     int i;
     for(i = 0; i < json_array_size(tabPays); i++) {
@@ -86,7 +86,6 @@ int countries_nbCaracteresFrontieres(json_t *pays){
         return nbCaracteres;
 
     } else {
-        printf("WTF AUSTRALIA");
         return 2;
     }
 }
@@ -167,6 +166,6 @@ json_t * countries_paysSelonRegion(json_t *tabPays, char *region) {
     return tabPaysRegion;
 }
 
-//a faire: changer les noms getLangues et getFrontieres pour printLangues...
+//a faire:
 //changer get Capitale et getNom pour countries_Capitale et countries_Nom
-
+//gérer le cas où les fonctions getters ne trouvent pas d'objet voulu

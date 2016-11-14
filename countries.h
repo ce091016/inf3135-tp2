@@ -3,7 +3,7 @@
 //PROTOTYPES
 //
 
-json_t* countries_getJsonObjectFromCountry(char * code, json_t* tabPays); 
+json_t* countries_getJsonObjectFromCountry(const char * code, json_t* tabPays); 
 
 const char * countries_getCode(json_t *pays);
 
