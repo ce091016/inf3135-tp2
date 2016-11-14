@@ -54,14 +54,35 @@ utilisez cette section pour indiquer la liste des tâches à effectuer pour
 compléter le projet en utilisant le [format spécial
 Markdown](https://docs.gitlab.com/ce/user/markdown.html#task-lists) :
 
-- [ ] Programme principal
+- [x] Module graphviz
 
-  - [ ] Lecture de countries.json (responsable: Olivier)
-  - [ ] Gérer les input (responsable : Jean-Lou)
+  - [x] Transformation en format graphviz (responsable: Olivier)
+
+- [x] Module countries
+
+  - [x] Lecture du format jansson (responsable: Olivier)
+
+- [x] Module input
+
+  - [x] Lecture et vérification des entrées (responsable : Jean-Lou) 
+
+- [x] Module output
+
+  - [ ] Intégration des modules input, countries et graphviz 
+        afin d'afficher correctement(responsable: Jean-Lou
+
+- [x] Module exécutable
+
+  - [x] Intégration de tous les modules afin de créer 
+        un exécutable fonctionnel (responsable: Jean-Lou
+
+- [ ] Tests (responsable: Jean-Lou et Olivier)
+
 
 - [ ] Autres
 
-  - [ ] Mise à jour du Readme (responsable : Jean-Lou et Olivier)
-  - [ ] Makefile (responsable : Jean-Lou)
+  - [ ] Makefile (responsable: Jean-Lou)
 
-- [ ] Tâche 3
+  - [ ] Respect de la structure (responsable: Jean-Lou)
+
+  - [ ] Tests
