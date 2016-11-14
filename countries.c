@@ -39,16 +39,17 @@
 json_t *countries_getJsonObjectFromCountry(const char *code, json_t *tabPays) {
     json_t * returnObj;
     int i;
+    char codeParam[4];
+    strcpy(codeParam, code);
+    int longueurCode = strlen(codeParam);
+    int j;
+    for (j = 0; j<longueurCode; j++) {
+        codeParam[j] = toupper(codeParam[j]);
+    }
+
     for(i = 0; i < json_array_size(tabPays); i++) {
         json_t *data = json_array_get(tabPays, i);
         const char *codePays = countries_getCode(data);
-        char codeParam[4];
-        strcpy(codeParam, code);
-        int longueurCode = strlen(codeParam);
-        int j;
-        for (j = 0; j<longueurCode; j++) {
-            codeParam[j] = toupper(codeParam[j]);
-        }
         if (strcmp(codeParam, codePays)==0) {
             returnObj = data;
             return returnObj;
