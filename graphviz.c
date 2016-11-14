@@ -73,6 +73,7 @@ void graphviz_ecrireUnPays(int langues, int capitale, int frontieres, int flag, 
 }
 
 void graphviz_ecrirePaysVoisins(json_t *tabPays, FILE * graphviz) {
+    const char * region = countries_region(json_array_get(tabPays, 0));
     int i;
     for (i=0; i< json_array_size(tabPays); i++) {
         json_t *pays = json_array_get(tabPays, i);
@@ -83,8 +84,11 @@ void graphviz_ecrirePaysVoisins(json_t *tabPays, FILE * graphviz) {
                 int j;
                 for (j=0; j< json_array_size(frontieres); j++) {
                     const char * codePaysTemp = json_string_value(json_array_get(frontieres, j));
-                    if (strcmp(codePays, codePaysTemp)<0) {
-                        fprintf(graphviz, "    %s -- %s;\n", codePays, json_string_value(json_array_get(frontieres, j)));
+                    json_t * paysTemp = countries_getJsonObjectFromCountry(codePaysTemp, tabPays);
+                    if (paysTemp != NULL) { //donc si codePaysTemp fait partie de la même région
+                        if (strcmp(codePays, codePaysTemp)<0) {
+                            fprintf(graphviz, "    %s -- %s;\n", codePays, codePaysTemp);
+                        }
                     }
                 }
             }
