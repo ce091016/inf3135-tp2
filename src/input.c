@@ -4,10 +4,11 @@
 #include <stdbool.h>
 #include <getopt.h>
 
+#define HELP_MSG "Try using 'bin/tp2 --help' for more information.\n"
 
 static int option_flag;
 
-int main(int argc, char *argv[]){
+void input(int argc, char *argv[],char *rep[]){
     int c;
 
     while(true){
@@ -42,60 +43,62 @@ int main(int argc, char *argv[]){
                 break;
 
             case 1:
-                printf("flag help\n");
+                rep[0] = "help";
                 break;
             
             case 2:
-                printf("flag output-format + %s\n",optarg);
+                rep[1] = "output-format";
+                rep[2] = optarg;
                 break;
             
             case 3:
-                printf("flag output-filename + %s\n",optarg);
+                rep[3] = "output-filename";
+                rep[4] = optarg;
                 break;
 
             case 4:
-                printf("flag show-languages\n");
+                rep[5] = "show-languages";
                 break;
 
             case 5:
-                printf("flag show-capital\n");
+                rep[6] = "show-capital";
                 break;
 
             case 6:
-               printf("flag show-borders\n");
+                rep[7] = "show-borders";
                break;
 
             case 7:
-               printf("flag show-flag\n");
+                rep[8] = "show-flag";
                break;
 
             case 8:
-                printf("flag country + %s\n",optarg);
+                rep[9] = "country";
+                rep[10] = optarg;
                 break;
 
             case 9:
-                printf("flag region + %s\n",optarg);
+                rep[11] = "region";
+                rep[12] = optarg;
                 break;
 
             case '?':
-                break;
+                printf(HELP_MSG);
+                exit(1);
 
             default:
                 abort();
         }
     }
 
-   // if(option_flag == 4)
-     //   puts("option_flag is set.\n");
-
     if(optind < argc){
-        printf("non-option ARGV-elements: ");
+        printf("Invalid option.\n");
         while(optind < argc){
             printf("%s ", argv[optind++]);
             putchar('\n');
+            printf(HELP_MSG);
         }
 
         exit(0);
     }
-    
 }
