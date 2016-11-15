@@ -83,6 +83,4 @@ Markdown](https://docs.gitlab.com/ce/user/markdown.html#task-lists) :
 
   - [ ] Makefile (responsable: Jean-Lou)
 
-  - [ ] Respect de la structure (responsable: Jean-Lou)
-
-  - [ ] Tests
+  - [ ] Respect de la structure des répertoires (responsable: Jean-Lou)
