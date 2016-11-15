@@ -1,33 +1,24 @@
-#CURRENT_DIR = $(notdir$(shell pwd))
-#EXEC_PATH = $(CURRENT_DIR)bin
-#FILE = tp2
-#SRC_PATH = $(CURRENT_DIR)src
-#CFLAGS = -Wall 
+CC = gcc
+CFLAGS = -Wall
+LFLAGS =
+LIB = -ljansson
+EXEC = tp2
+CURRENT_DIR = $(notdir$(shell pwd))
+BIN_PATH = $(CURRENT_DIR)bin
+SRC_PATH = $(CURRENT_DIR)src
+OBJ_PATH = $(CURRENT_DIR)obj
+SRC = $(wildcard $(SRC_PATH)/*.c)
+OBJECTS = $(SRC:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)
 
 
-#$(FILE): $(FILE).o
-#	gcc -o $(EXEC_PATH)/$(FILE) $(FILE).o
-#	mv *.o $(EXEC_PATH)
+$(BIN_PATH)/$(EXEC): $(OBJECTS)
+	@$ $(CC) -o $@ $(OBJECTS) $(LIB)
 
-#$(FILE).o: $(SRC_PATH)/$(FILE).c
-#	gcc $(CFLAGES) -c $(SRC_PATH)/$(FILE).c
+$(OBJECTS): $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
+	@$ $(CC) $(CFLAGS) -c $< -o $@
 
-#.PHONY: clean
+.PHONY: clean
 
-#clean:
-#		rm -f $(EXEC_PATH)/*.o
-#		rm -f $(EXEC_PATH)/$(FILE)
-#
-#
-
-exe: test.o input.o countries.o
-	gcc -o exe test.o input.o countries.o -ljansson
-	rm -f *.o
-test.o: test.c
-	gcc -c test.c
-
-input.o: input.c
-	gcc -c input.c
-
-countries.o: countries.c
-	gcc -c countries.c
+clean:
+	rm -f $(BIN_PATH)/$(EXEC)
+	rm -f $(OBJ_PATH)/*.o
