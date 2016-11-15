@@ -33,7 +33,7 @@
 #define LABEL "        label = <<table border=\"0\" cellspacing=\"0\">\n"
 #define LABELFIN "        </table>>\n"
 #define TRTDIMAGE "            <tr><td align=\"center\" border=\"1\" fixedsize=\"true\" width=\"200\" height=\"100\">"
-#define TRTDIMAGE2 "<img src=data/countries/data\""
+#define TRTDIMAGE2 "<img src=\"data/countries/data/"
 #define TRTDIMAGE3 ".png\" scale=\"true\"/>"
 #define TRTDIMAGE4 "</td></tr>\n"
 #define TRTDNAME "            <tr><td align=\"left\" border=\"1\"><b>Name</b>: "
