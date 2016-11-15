@@ -4,11 +4,13 @@
 #include <stdbool.h>
 #include <getopt.h>
 
+#define HELP_MSG "Try using 'bin/tp2 --help' for more information.\n"
 
 static int option_flag;
 
 void input(int argc, char *argv[],char *rep[]){
     int c;
+
     while(true){
     
         static struct option long_options[] =
@@ -81,7 +83,7 @@ void input(int argc, char *argv[],char *rep[]){
                 break;
 
             case '?':
-                printf("Try using 'bin/tp2 --help' for more information.\n");
+                printf(HELP_MSG);
                 exit(1);
 
             default:
@@ -94,7 +96,7 @@ void input(int argc, char *argv[],char *rep[]){
         while(optind < argc){
             printf("%s ", argv[optind++]);
             putchar('\n');
-            printf("Try using 'bin/tp2 --help' for more information.\n");
+            printf(HELP_MSG);
         }
 
         exit(0);

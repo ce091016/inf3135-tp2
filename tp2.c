@@ -21,37 +21,55 @@
 #define REGION 11
 
 int main (int argc, char * argv[]) {
-     json_error_t error;
+    json_error_t error;
     json_t *root = json_load_file("data/countries/countries.json",0,&error);
     char *filename;
     bool hasName = false;
     char **rep = (char**)calloc(TAILLE_MAX + 1, sizeof(char*)); 
     input(argc, argv, rep);
-    
+
     if(rep[OUTPUT_FORMAT] != NULL){
+
         if(rep[OUTPUT_FILENAME + 1] != NULL){
+            
             filename = rep[OUTPUT_FILENAME + 1];
             hasName = true;
+
         }
+        
         if(strcmp(rep[OUTPUT_FORMAT + 1], "dot") == 0){
-           dotOutput(rep,filename,root);
+           
+           if(!hasName) stdoutDot(rep, root); 
+           if(hasName) dotFile(rep, filename, root);
+
        }else if(strcmp(rep[OUTPUT_FORMAT + 1], "text") == 0){
-           stdoutOutput(rep,root);
-           if(hasName) textOutput(rep,filename,root);
+           
+           if(!hasName) stdoutText(rep, root);
+           if(hasName) textFile(rep, filename, root);
+
        }else if(strcmp(rep[OUTPUT_FORMAT + 1], "png") == 0){
-            if(rep[OUTPUT_FILENAME + 1] != NULL){
-                producePng(rep,filename,root);
-            }else{
-                printf("Filename required for 'png' format.\n");
-                exit(1);
+            
+           if(rep[OUTPUT_FILENAME + 1] != NULL){
+                
+               producePng(rep, filename, root);
+            
+           }else{
+                
+               printf("Filename required for 'png' format.\n");
+               exit(1);
             }
        }else{
+
         printf("Invalid file format.\n");
         exit(1);
+       
        }
     }else{
-        stdoutOutput(rep,root);
+
+        stdoutText(rep, root);
+    
     }
+    
     free(rep);
     return 0;
 }
