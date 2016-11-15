@@ -1,3 +1,18 @@
+/**   
+* INF3135  
+*  
+* Travail pratique 2  
+*  
+* Nom:             Levasseur  
+* Prenom:          Olivier  
+* Code Permanent:  LEVO19109301  
+* Email:           levasseuro.ol@gmail.com  
+* Nom:			   Hallee
+* Prenom:          Jean-Lou
+* Code Permanent:  HALJ05129309
+* Email:           
+*/
+
 #include <jansson.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,6 +50,9 @@
     printf("nbCaracteresLangues : %d\n", countries_nbCaracteresLangues(test));
 }*/
 
+
+// Implémentation
+// --------------
     
 json_t *countries_getJsonObjectFromCountry(const char *code, json_t *tabPays) {
     json_t * returnObj;
@@ -170,3 +188,10 @@ json_t * countries_paysSelonRegion(json_t *tabPays, char *region) {
 //a faire:
 //changer get Capitale et getNom pour countries_Capitale et countries_Nom
 //gérer le cas où les fonctions getters ne trouvent pas d'objet voulu
+
+//on devrait pas rajouter une fonction qui load le fichier json?
+
+//pourquoi les fonctions qui écrivent dans des strings ne créent-elles 
+//pas elles-mêmes la string? pcq elles se trouvent dans un fichier différent 
+//de l'endroit ou elles sont appelées, ce qui fait que la string peut etre 
+//effacée ou modifiée
