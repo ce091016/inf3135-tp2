@@ -89,7 +89,6 @@ void graphviz_ecrireUnPays(int langues, int capitale, int frontieres, int flag, 
 }
 
 void graphviz_ecrirePaysVoisins(json_t *tabPays, FILE * graphviz) {
-    const char * region = countries_region(json_array_get(tabPays, 0));
     int i;
     for (i=0; i< json_array_size(tabPays); i++) {
         json_t *pays = json_array_get(tabPays, i);

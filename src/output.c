@@ -8,6 +8,7 @@
 #include "countries.h"
 #include "graphviz.h"
 
+#define COUNTRY_REGION_CONFLICT_MSG "Option '--country' activated; option '--region' ignored.\n"
 #define TAILLE_MAX 12
 #define HELP 0
 #define OUTPUT_FORMAT 1
@@ -19,60 +20,38 @@
 #define COUNTRY 9
 #define REGION 11
 
-void stdoutOutput(char **rep, json_t *root);
-void dotOutput(char **rep, char *filename, json_t *root);
-void textOutput(char **rep, char *filename, json_t *root);
+void stdoutText(char **rep, json_t *root);
+void stdoutDot(char **rep, json_t *root);
+void dotFile(char **rep, char *filename, json_t *root);
+void textFile(char **rep, char *filename, json_t *root);
 void producePng(char **rep, char *filename, json_t *root);
 void help();
-/*
-int main(int argc, char *argv[]){
-    json_error_t error;
-    json_t *root = json_load_file("data/countries/countries.json",0,&error);
-    char *filename;
-    bool hasName = false;
-    char **rep = (char**)calloc(TAILLE_MAX + 1, sizeof(char*)); 
-    input(argc, argv, rep);
-    
-    if(rep[OUTPUT_FORMAT] != NULL){
-        if(rep[OUTPUT_FILENAME + 1] != NULL){
-            filename = rep[OUTPUT_FILENAME + 1];
-            hasName = true;
-        }
-        if(strcmp(rep[OUTPUT_FORMAT + 1], "dot") == 0){
-           dotOutput(rep,filename,root);
-       }else if(strcmp(rep[OUTPUT_FORMAT + 1], "text") == 0){
-           stdoutOutput(rep,root);
-           if(hasName) textOutput(rep,filename,root);
-       }else if(strcmp(rep[OUTPUT_FORMAT + 1], "png") == 0){
-            if(rep[OUTPUT_FILENAME + 1] != NULL){
-                producePng(rep,filename,root);
-            }else{
-                printf("Filename required for 'png' format.\n");
-                exit(1);
-            }
-       }else{
-        printf("Invalid file format.\n");
-        exit(1);
-       }
-    }else{
-        stdoutOutput(rep,root);
-    }
-    free(rep);
-    return 0;
-}
-*/
+
 void producePng(char **rep, char *filename, json_t *root){
-    dotOutput(rep,filename,root);
-    system("neato -Goverlap=false -Tpng -o canada.png graphviz.dot");
+    const char *nameWithoutExtension;
+    char *bashCommand = "neato -Goverlap=false -Tpng -o ";
+    char *nameDot = (char*)malloc(sizeof(char)*strlen(filename)); 
+    char *namePng = (char*)malloc(sizeof(char)*strlen(filename));
+    char command[150];
+
+    nameWithoutExtension = strtok(filename,".");
+    strcpy(nameDot, nameWithoutExtension);
+    strcat(nameDot, ".dot");
+    strcpy(namePng, nameWithoutExtension);
+    strcat(namePng, ".png");
+    dotFile(rep, nameDot, root);
+    sprintf(command,"%s%s %s\n", bashCommand, namePng, nameDot);
+    system(command);
     system("rm -f *.dot");
 }
 
-void textOutput(char **rep, char *filename, json_t *root){
-    json_t *test;
+void textFile(char **rep, char *filename, json_t *root){
+    json_t *pays;
     json_t *values;
     bool onlyOneCountry = false;
     int i = 0;
     FILE *file = fopen(filename,"w");
+    
     if(file == NULL){
         printf("File opening error.\n");
         exit(1);
@@ -84,49 +63,56 @@ void textOutput(char **rep, char *filename, json_t *root){
     } 
     
     if(rep[COUNTRY] != NULL){
-        test = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
+        
+        pays = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
         onlyOneCountry = true;
+    
     }else if(rep[REGION] != NULL){
+        
         values = countries_paysSelonRegion(root,rep[REGION + 1]);
+    
     }else{
+       
         values = root;
     }
 
     do  {
-        if(!onlyOneCountry) test = json_array_get(values,i);
         
-        fprintf(file, "Name : %s\n",countries_getNomPays(test));
-        fprintf(file, "Code : %s\n",countries_getCode(test));
+        if(!onlyOneCountry) pays = json_array_get(values,i);
+        
+        fprintf(file, "Name : %s\n",countries_getNomPays(pays));
+        fprintf(file, "Code : %s\n",countries_getCode(pays));
     
         if(rep[SHOW_CAPITAL] != NULL){
-            fprintf(file, "Capital : %s\n",countries_getCapitale(test));
+            fprintf(file, "Capital : %s\n",countries_getCapitale(pays));
         }
+
         if(rep[SHOW_LANGUAGES] != NULL){
 
-            char *langues = (char*)malloc(sizeof(char)*countries_nbCaracteresLangues(test));
-            countries_langues2(test, langues);
+            char *langues = (char*)malloc(sizeof(char)*countries_nbCaracteresLangues(pays));
+            countries_langues2(pays, langues);
             fprintf(file, "Langues: %s", langues);
             free(langues);
-            //countries_getLangues(test);
         }
     
         if(rep[SHOW_BORDERS] != NULL){
-            char *frontieres =(char*)malloc(sizeof(char)*countries_nbCaracteresFrontieres(test));
-            countries_frontieres2(test, frontieres);
+            char *frontieres =(char*)malloc(sizeof(char)*countries_nbCaracteresFrontieres(pays));
+            countries_frontieres2(pays, frontieres);
             fprintf(file, "Borders : %s", frontieres);
             free(frontieres);
         }
+
         i++;
+
     }while(rep[COUNTRY] == NULL && i < json_array_size(values));
+    
     fclose(file);
     
-
-    if(rep[REGION] != NULL && rep[COUNTRY] != NULL) printf("Option '--country' activated; option '--region' ignored.\n");
-
+    if(rep[REGION] != NULL && rep[COUNTRY] != NULL) printf(COUNTRY_REGION_CONFLICT_MSG);
 }
 
-void dotOutput(char **rep, char *filename, json_t *root){
-    json_t *test;
+void dotFile(char **rep, char *filename, json_t *root){
+    json_t *pays;
     json_t *values;
     int langues;
     int capitale;
@@ -140,84 +126,116 @@ void dotOutput(char **rep, char *filename, json_t *root){
     } 
     
     if(rep[COUNTRY] != NULL){
-        test = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
+       
+        pays = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
         onlyOneCountry = true;
+    
     }else if(rep[REGION] != NULL){
+        
         values = countries_paysSelonRegion(root,rep[REGION + 1]);
+    
     }else{
+        
         values = root;
     }
 
     if(rep[SHOW_CAPITAL] != NULL){
         capitale = 1;
     }
+
     if(rep[SHOW_LANGUAGES] != NULL){
         langues = 1;
     }
+
     if(rep[SHOW_BORDERS] != NULL){
         frontieres = 1;
     }
+
     if(rep[SHOW_FLAG] != NULL){
         flag = 1;
     }
         
-    if(onlyOneCountry) graphviz_ecrireUnSeulPays(langues,capitale,frontieres,flag,test, filename);
+    if(onlyOneCountry) graphviz_ecrireUnSeulPays(langues,capitale,frontieres,flag,pays, filename);
     if(!onlyOneCountry) graphviz_ecrirePlusieursPays(langues,capitale,frontieres,flag,values, filename);
 
-    if(rep[REGION] != NULL && rep[COUNTRY] != NULL) printf("Option '--country' activated; option '--region' ignored.\n");
+    if(rep[REGION] != NULL && rep[COUNTRY] != NULL) printf(COUNTRY_REGION_CONFLICT_MSG);
 }
 
-void stdoutOutput(char **rep, json_t *root){
-    json_t *test;
+void stdoutDot(char **rep, json_t *root){
+    int c;
+    FILE *tempFile;
+    dotFile(rep, "tempFile.txt", root);
+    tempFile = fopen("tempFile.txt","r");
+    
+    if(tempFile){
+        while((c = getc(tempFile)) != EOF){
+            putchar(c);
+        }
+        fclose(tempFile);
+        system("rm tempFile.txt");
+    }   
+}
+
+void stdoutText(char **rep, json_t *root){
+    json_t *pays;
     json_t *values;
     bool onlyOneCountry = false;
     int i = 0;
+    
     if(rep[HELP] != NULL){
         help();
         exit(0);
     } 
     
     if(rep[COUNTRY] != NULL){
-        test = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
+        
+        pays = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
         onlyOneCountry = true;
+    
     }else if(rep[REGION] != NULL){
+        
         values = countries_paysSelonRegion(root,rep[REGION + 1]);
+    
     }else{
+        
         values = root;
     }
 
     do  {
-        if(!onlyOneCountry) test = json_array_get(values,i);
         
-        printf("Name : %s\n",countries_getNomPays(test));
-        printf("Code : %s\n",countries_getCode(test));
+        if(!onlyOneCountry) pays = json_array_get(values,i);
+        
+        printf("Name : %s\n",countries_getNomPays(pays));
+        printf("Code : %s\n",countries_getCode(pays));
     
         if(rep[SHOW_CAPITAL] != NULL){
-            printf("Capital : %s\n",countries_getCapitale(test));
+            
+            printf("Capital : %s\n",countries_getCapitale(pays));
         }
+        
         if(rep[SHOW_LANGUAGES] != NULL){
             
-            char *langues = (char*)malloc(sizeof(char)*countries_nbCaracteresLangues(test));
-            countries_langues2(test, langues);
+            char *langues = (char*)malloc(sizeof(char)*countries_nbCaracteresLangues(pays));
+            countries_langues2(pays, langues);
             printf("Langues: %s\n", langues);
             free(langues);
-            //countries_getLangues(test);
         }
     
         if(rep[SHOW_BORDERS] != NULL){
             
-            char *frontieres =(char*)malloc(sizeof(char)*countries_nbCaracteresFrontieres(test));
-            countries_frontieres2(test, frontieres);
+            char *frontieres =(char*)malloc(sizeof(char)*countries_nbCaracteresFrontieres(pays));
+            countries_frontieres2(pays, frontieres);
             printf("Borders : %s\n", frontieres);
             free(frontieres);
-            //countries_getFrontieres(test); 
         }
+        
         i++;
+    
     }while(rep[COUNTRY] == NULL && i < json_array_size(values));
 
     
 
-    if(rep[REGION] != NULL && rep[COUNTRY] != NULL) printf("Option '--country' activated; option '--region' ignored.\n");
+    if(rep[REGION] != NULL && rep[COUNTRY] != NULL) printf(COUNTRY_REGION_CONFLICT_MSG);
 }
 
 void help(){
@@ -243,7 +261,7 @@ void help(){
     printf("                             (only for \"dot\" and \"png\" format).\n");
   	printf("  --country COUNTRY          The country code (e.g. \"can\", \"usa\") to be displayed.\n");
   	printf("  --region REGION            The region of the countries to be displayed.\n");
-    printf("                             The supported regions are \"africa\", \"americas\",\n");
-    printf("                             \"asia\", \"europe\" and \"oceania\".\n");
+    printf("                             The supported regions are \"Africa\", \"Americas\",\n");
+    printf("                             \"Asia\", \"Europe\" and \"Oceania\".\n");
 }
 
