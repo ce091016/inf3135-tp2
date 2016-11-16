@@ -31,11 +31,55 @@ et comment lancer la suite de tests automatiques (make test ?), comment
 nettoyer le dossier (make clean ?).
 
 ## Fonctionnement
+Exemple 1:
+Entrée:
+~~~~
+    bin/tp2 --country ury
+~~~~
 
-Expliquez brièvement comment utiliser votre programme avec au moins trois
-exemples d'utilisation (commande lancée et résultat affiché).  Assurez-vous que
-les exemples de commande lancée et de résultats obtenus sont formatés
-correctement à l'aide de Markdown.
+Affiche:
+~~~~
+    Name : Oriental Republic of Uruguay
+    Code : URY
+~~~~
+
+Exemple 2:
+Entrée:
+~~~~
+    bin/tp2 --country afg --show-capital --show-languages --show-borders
+~~~~
+
+Affiche:
+~~~~   
+    Name : Islamic Republic of Afghanistan
+    Code : AFG
+    Capital : Kabul
+    Langues: Dari, Pashto, Turkmen
+    Borders : IRN, PAK, TKM, UZB, TJK, CHN
+~~~~
+
+Exemple 3:
+Entrée:
+~~~~
+     
+~~~~
+
+Affiche:
+~~~~
+ graph {
+    ARM [
+        shape = none
+        label = <<table border="0" cellspacing="0">
+            <tr><td align="center" border="1" fixedsize="true" width="200" height="100"><img src="data/countries/data/arm.png" scale="true"/></td></tr>
+            <tr><td align="left" border="1"><b>Name</b>: Republic of Armenia</td></tr>
+            <tr><td align="left" border="1"><b>Code</b>: ARM</td></tr>
+            <tr><td align="left" border="1"><b>Capital</b>: Yerevan</td></tr>
+            <tr><td align="left" border="1"><b>Language</b>: Armenian, Russian</td></tr>
+            <tr><td align="left" border="1"><b>Borders</b>: AZE, GEO, IRN, TUR</td></tr>
+        </table>>
+    ];
+}
+~~~~
 
 ## Contenu du projet
 
@@ -69,12 +113,17 @@ Markdown](https://docs.gitlab.com/ce/user/markdown.html#task-lists) :
 - [x] Module output
 
   - [ ] Intégration des modules input, countries et graphviz 
-        afin d'afficher correctement(responsable: Jean-Lou
+        afin d'afficher correctement(responsable: Jean-Lou)
 
 - [x] Module exécutable
 
   - [x] Intégration de tous les modules afin de créer 
-        un exécutable fonctionnel (responsable: Jean-Lou
+        un exécutable fonctionnel (responsable: Jean-Lou)
+
+- [x] Module util
+
+  - [x] Fonctions utiles n'appartenant pas à un module en particulier
+        (responsable: Olivier)
 
 - [ ] Tests (responsable: Jean-Lou et Olivier)
 
