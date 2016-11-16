@@ -140,7 +140,7 @@ const char * countries_region(json_t *pays) {
 }
 
 json_t * countries_paysSelonRegion(json_t *tabPays, char *region) {
-    json_t *tabPaysRegion = json_array(); //je pense que l'allocation dynamique se fait toute seule
+    json_t *tabPaysRegion = json_array(); 
     int i;
     for (i=0; i<json_array_size(tabPays); i++) {
         json_t *paysTemp = json_array_get(tabPays, i);
