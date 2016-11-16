@@ -91,14 +91,14 @@ void textFile(char **rep, char *filename, json_t *root){
 
             char *langues = (char*)malloc(sizeof(char)*countries_nbCaracteresLangues(pays));
             countries_langues2(pays, langues);
-            fprintf(file, "Langues: %s", langues);
+            fprintf(file, "Langues: %s\n", langues);
             free(langues);
         }
     
         if(rep[SHOW_BORDERS] != NULL){
             char *frontieres =(char*)malloc(sizeof(char)*countries_nbCaracteresFrontieres(pays));
             countries_frontieres2(pays, frontieres);
-            fprintf(file, "Borders : %s", frontieres);
+            fprintf(file, "Borders : %s\n", frontieres);
             free(frontieres);
         }
 
