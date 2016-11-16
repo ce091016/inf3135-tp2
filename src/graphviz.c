@@ -20,6 +20,7 @@
 #include <ctype.h>
 
 #include "countries.h"
+#include "util.h"
 
 // Constantes
 // ----------
@@ -53,7 +54,9 @@ void graphviz_ecrireUnPays(int langues, int capitale, int frontieres, int flag, 
     fprintf(graphviz, "%s%s%s", DEBUTPAYS, codePays, DEBUTPAYS2);
     fprintf(graphviz, "%s%s", SHAPE, LABEL);
     if (flag == 1) {
-        fprintf(graphviz, "%s%s%s%s%s", TRTDIMAGE, TRTDIMAGE2, codePays, TRTDIMAGE3, TRTDIMAGE4);
+        char codeMin[4];
+        util_chaineEnMinuscules(codePays, codeMin);
+        fprintf(graphviz, "%s%s%s%s%s", TRTDIMAGE, TRTDIMAGE2, codeMin, TRTDIMAGE3, TRTDIMAGE4);
     }
     fprintf(graphviz, "%s%s%s", TRTDNAME, countries_getNomPays(pays), FINTRTD);
     fprintf(graphviz, "%s%s%s", TRTDCODE, countries_getCode(pays), FINTRTD);
