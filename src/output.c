@@ -96,7 +96,7 @@ void textFile(char **rep, char *filename, json_t *root){
 
             char *langues = (char*)malloc(sizeof(char)*countries_nbCaracteresLangues(pays));
             countries_langues2(pays, langues);
-            fprintf(file, "Langues: %s\n", langues);
+            fprintf(file, "Languages: %s\n", langues);
             free(langues);
         }
     
@@ -222,7 +222,7 @@ void stdoutText(char **rep, json_t *root){
             
             char *langues = (char*)malloc(sizeof(char)*countries_nbCaracteresLangues(pays));
             countries_langues2(pays, langues);
-            printf("Langues: %s\n", langues);
+            printf("Languages: %s\n", langues);
             free(langues);
         }
     
