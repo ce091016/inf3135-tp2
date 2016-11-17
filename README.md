@@ -61,7 +61,7 @@ Affiche:
 Exemple 3:
 Entrée:
 ~~~~
-     
+     bin/tp2 --country arm --show-languages --show-capital --show-borders --show-flag --output-format dot
 ~~~~
 
 Affiche:

@@ -27,6 +27,11 @@ void textFile(char **rep, char *filename, json_t *root);
 void producePng(char **rep, char *filename, json_t *root);
 void help();
 
+/*
+void producePng2(char **rep, char *filename, json_t *root){
+    const char *bashCommand = "neato -Goverlap=false -Tpng -O ";
+}
+*/
 void producePng(char **rep, char *filename, json_t *root){
     const char *nameWithoutExtension;
     char *bashCommand = "neato -Goverlap=false -Tpng -o ";
