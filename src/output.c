@@ -85,11 +85,11 @@ void textFile(char **rep, char *filename, json_t *root){
         
         if(!onlyOneCountry) pays = json_array_get(values,i);
         
-        fprintf(file, "Name : %s\n",countries_getNomPays(pays));
-        fprintf(file, "Code : %s\n",countries_getCode(pays));
+        fprintf(file, "Name: %s\n",countries_getNomPays(pays));
+        fprintf(file, "Code: %s\n",countries_getCode(pays));
     
         if(rep[SHOW_CAPITAL] != NULL){
-            fprintf(file, "Capital : %s\n",countries_getCapitale(pays));
+            fprintf(file, "Capital: %s\n",countries_getCapitale(pays));
         }
 
         if(rep[SHOW_LANGUAGES] != NULL){
@@ -103,7 +103,7 @@ void textFile(char **rep, char *filename, json_t *root){
         if(rep[SHOW_BORDERS] != NULL){
             char *frontieres =(char*)malloc(sizeof(char)*countries_nbCaracteresFrontieres(pays));
             countries_frontieres2(pays, frontieres);
-            fprintf(file, "Borders : %s\n", frontieres);
+            fprintf(file, "Borders: %s\n", frontieres);
             free(frontieres);
         }
 
@@ -210,12 +210,12 @@ void stdoutText(char **rep, json_t *root){
         
         if(!onlyOneCountry) pays = json_array_get(values,i);
         
-        printf("Name : %s\n",countries_getNomPays(pays));
-        printf("Code : %s\n",countries_getCode(pays));
+        printf("Name: %s\n",countries_getNomPays(pays));
+        printf("Code: %s\n",countries_getCode(pays));
     
         if(rep[SHOW_CAPITAL] != NULL){
             
-            printf("Capital : %s\n",countries_getCapitale(pays));
+            printf("Capital: %s\n",countries_getCapitale(pays));
         }
         
         if(rep[SHOW_LANGUAGES] != NULL){
@@ -230,7 +230,7 @@ void stdoutText(char **rep, json_t *root){
             
             char *frontieres =(char*)malloc(sizeof(char)*countries_nbCaracteresFrontieres(pays));
             countries_frontieres2(pays, frontieres);
-            printf("Borders : %s\n", frontieres);
+            printf("Borders: %s\n", frontieres);
             free(frontieres);
         }
         
