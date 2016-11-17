@@ -17,8 +17,20 @@ $(BIN_PATH)/$(EXEC): $(OBJECTS)
 $(OBJECTS): $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 	@$ $(CC) $(CFLAGS) -c $< -o $@
 
-.PHONY: clean
+.PHONY: clean test data
+
+data:
+	git pull--recurse-submodules
+	git submodule update --remote --recursive
 
 clean:
 	rm -f $(BIN_PATH)/$(EXEC)
 	rm -f $(OBJ_PATH)/*.o
+	rm -f *.txt
+	rm -f *.dot
+	rm -f *.png
+
+test: test1
+	
+test1: 
+	bats test/testJLH.bats
