@@ -3,8 +3,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <getopt.h>
-
-#define HELP_MSG "Try using 'bin/tp2 --help' for more information.\n"
+#include "input.h"
 
 static int option_flag;
 

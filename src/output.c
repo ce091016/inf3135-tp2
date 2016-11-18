@@ -7,18 +7,7 @@
 #include "input.h"
 #include "countries.h"
 #include "graphviz.h"
-
-#define COUNTRY_REGION_CONFLICT_MSG "Option '--country' activated; option '--region' ignored.\n"
-#define TAILLE_MAX 12
-#define HELP 0
-#define OUTPUT_FORMAT 1
-#define OUTPUT_FILENAME 3
-#define SHOW_LANGUAGES 5
-#define SHOW_CAPITAL 6
-#define SHOW_BORDERS 7
-#define SHOW_FLAG 8
-#define COUNTRY 9
-#define REGION 11
+#include "output.h"
 
 void stdoutText(char **rep, json_t *root);
 void stdoutDot(char **rep, json_t *root);

@@ -11,6 +11,10 @@
 * Code Permanent:  LEVO19109301  
 * Email:           levasseuro.ol@gmail.com            
 */
+// Constantes
+// ----------
+
+#define HELP_MSG "Try using 'bin/tp2 --help' for more information.\n"
 
 // Prototypes
 // ----------
