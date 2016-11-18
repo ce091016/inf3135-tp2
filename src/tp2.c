@@ -34,9 +34,7 @@ int main (int argc, char * argv[]) {
             
             filename = rep[OUTPUT_FILENAME + 1];
             hasName = true;
-
         }
-        
         if(strcmp(rep[OUTPUT_FORMAT + 1], "dot") == 0){
            
            if(!hasName) stdoutDot(rep, root); 
@@ -54,22 +52,16 @@ int main (int argc, char * argv[]) {
                producePng(rep, filename, root);
             
            }else{
-                
                printf("Filename required for 'png' format.\n");
                exit(1);
             }
        }else{
-
-        printf("Invalid file format.\n");
-        exit(1);
-       
+            printf("Invalid file format.\n");
+            exit(1);
        }
     }else{
-
         stdoutText(rep, root);
-    
     }
-    
     free(rep);
     return 0;
 }
