@@ -1,3 +1,17 @@
+/**   
+* INF3135  
+*  
+* Travail pratique 2  
+* Nom:			   Hallee
+* Prenom:          Jean-Lou
+* Code Permanent:  HALJ05129309
+* Email:           jeanlou601@hotmail.com
+* Nom:             Levasseur  
+* Prenom:          Olivier  
+* Code Permanent:  LEVO19109301  
+* Email:           levasseuro.ol@gmail.com            
+*/
+
 #include <jansson.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,6 +23,9 @@
 #include "output.h"
 #include "countries.h"
 
+// Constantes
+// ----------
+
 #define TAILLE_MAX 12
 #define HELP 0
 #define OUTPUT_FORMAT 1
@@ -19,6 +36,9 @@
 #define SHOW_FLAG 8
 #define COUNTRY 9
 #define REGION 11
+
+// Main
+// ----
 
 int main (int argc, char * argv[]) {
     json_error_t error;

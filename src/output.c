@@ -1,3 +1,17 @@
+/**   
+* INF3135  
+*  
+* Travail pratique 2  
+* Nom:			   Hallee
+* Prenom:          Jean-Lou
+* Code Permanent:  HALJ05129309
+* Email:           jeanlou601@hotmail.com
+* Nom:             Levasseur  
+* Prenom:          Olivier  
+* Code Permanent:  LEVO19109301  
+* Email:           levasseuro.ol@gmail.com            
+*/
+
 #include <jansson.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,21 +23,9 @@
 #include "graphviz.h"
 #include "output.h"
 
-void stdoutText(char **rep, json_t *root);
-void stdoutDot(char **rep, json_t *root);
-void dotFile(char **rep, char *filename, json_t *root);
-void textFile(char **rep, char *filename, json_t *root);
-void producePng(char **rep, char *filename, json_t *root);
-void help();
+// Implémentations
+// ---------------
 
-/*
-* Cette fonction permet de créer une image au
-* format 'png' à partir d'un fichier 'dot'.
-* @param rep,
-* @param filename,
-* "param root,
-*
-*/
 void producePng(char **rep, char *filename, json_t *root){
     const char *nameWithoutExtension;
     char *bashCommand = "neato -Goverlap=false -Tpng -o ";
@@ -236,31 +238,5 @@ void stdoutText(char **rep, json_t *root){
 }
 
 void help(){
-    /*
-    printf("Usage: bin/tp2 [--help] [--output-format FORMAT] [--output-filename FILENAME]\n");
-	printf(" [--show-languages] [--show-capital] [--show-borders] [--show-flag]\n");
- 	printf(" [--country COUNTRY] [--region REGION]\n\n");
-
-	printf("Displays information about countries.\n\n");
-
-	printf("Optional arguments:\n");
-  	printf("  --help                     Show this help message and exit.\n");
-  	printf("  --output-format FORMAT     Selects the ouput format (either \"text\", \"dot\" or \"png\").\n");
-    printf("                             The \"dot\" format is the one recognized by Graphviz.\n");
-    printf("                             The default format is \"text\".\n");
-  	printf("  --output-filename FILENAME The name of the output filename. This argument is\n");
-    printf("                             mandatory for the \"png\" format. For the \"text\" and \"dot\"\n");
-    printf("                             format, the result is printed on stdout if no output\n");
-    printf("                             filename is given.\n");
-  	printf("  --show-languages           The official languages of each country are displayed.\n");
-  	printf("  --show-capital             The capital of each country is displayed.\n");
-    printf("  --show-borders             The borders of each country is displayed.\n");
-  	printf("  --show-flag                The flag of each country is displayed\n");
-    printf("                             (only for \"dot\" and \"png\" format).\n");
-  	printf("  --country COUNTRY          The country code (e.g. \"can\", \"usa\") to be displayed.\n");
-  	printf("  --region REGION            The region of the countries to be displayed.\n");
-    printf("                             The supported regions are \"Africa\", \"Americas\",\n");
-    printf("                             \"Asia\", \"Europe\" and \"Oceania\".\n");
-    */
     printf("%s", MSG_AIDE);
 }

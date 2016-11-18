@@ -1,3 +1,17 @@
+/**   
+* INF3135  
+*  
+* Travail pratique 2  
+* Nom:			   Hallee
+* Prenom:          Jean-Lou
+* Code Permanent:  HALJ05129309
+* Email:           jeanlou601@hotmail.com
+* Nom:             Levasseur  
+* Prenom:          Olivier  
+* Code Permanent:  LEVO19109301  
+* Email:           levasseuro.ol@gmail.com            
+*/
+
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -6,6 +20,9 @@
 #include "input.h"
 
 static int option_flag;
+
+// Implémentation
+// --------------
 
 void input(int argc, char *argv[],char *rep[]){
     int c;
