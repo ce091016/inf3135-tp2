@@ -17,9 +17,12 @@ void producePng(char **rep, char *filename, json_t *root);
 void help();
 
 /*
-void producePng2(char **rep, char *filename, json_t *root){
-    const char *bashCommand = "neato -Goverlap=false -Tpng -O ";
-}
+* Cette fonction permet de créer une image au
+* format 'png' à partir d'un fichier 'dot'.
+* @param rep,
+* @param filename,
+* "param root,
+*
 */
 void producePng(char **rep, char *filename, json_t *root){
     const char *nameWithoutExtension;
@@ -233,6 +236,7 @@ void stdoutText(char **rep, json_t *root){
 }
 
 void help(){
+    /*
     printf("Usage: bin/tp2 [--help] [--output-format FORMAT] [--output-filename FILENAME]\n");
 	printf(" [--show-languages] [--show-capital] [--show-borders] [--show-flag]\n");
  	printf(" [--country COUNTRY] [--region REGION]\n\n");
@@ -257,5 +261,6 @@ void help(){
   	printf("  --region REGION            The region of the countries to be displayed.\n");
     printf("                             The supported regions are \"Africa\", \"Americas\",\n");
     printf("                             \"Asia\", \"Europe\" and \"Oceania\".\n");
+    */
+    printf("%s", MSG_AIDE);
 }
-

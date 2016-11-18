@@ -11,6 +11,7 @@
 * Code Permanent:  LEVO19109301  
 * Email:           levasseuro.ol@gmail.com            
 */
+
 // Constantes
 // ----------
 
@@ -22,7 +23,8 @@
 /*
  * Cette fonction permet de gérer les entrées de l'utilisateur.
  * Tout ce qui succède 'bin/tp2' lors de l'exécution du programme
- * est traité.
+ * est traité. Cette fonction est grandement inspiré du fichier
+ * 'long_opt.c' montré dans le cours de INF3135 séance 7.
  * @param argc, la taille de argv.
  * @param argv, un "tableau" de chaînes de caractères contenant
  * les options entrées par l'utilisateur (pas encore traité par getopt).
