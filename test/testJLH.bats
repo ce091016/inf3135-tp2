@@ -1,20 +1,20 @@
 #!/usr/bin/env bats
 
 @test "Pays valide" {
-    run ~/INF3135/tp2/inf3135-aut2016-tp2/bin/tp2 --country can
+    run ./bin/tp2 --country can
     [ "${lines[0]}" = "Name: Canada" ]
     [ "${lines[1]}" = "Code: CAN" ]
 }
 
 @test "Canada" {
-    run ~/INF3135/tp2/inf3135-aut2016-tp2/bin/tp2 --country can
+    run ./bin/tp2 --country can
    
     [ "${lines[0]}" = "Name: Canada" ]
     [ "${lines[1]}" = "Code: CAN" ]
 }
 
 @test "Canada, langues, capitale, frontieres" {
-    run ~/INF3135/tp2/inf3135-aut2016-tp2/bin/tp2 --country can --show-languages --show-capital --show-borders --show-flag
+    run ./bin/tp2 --country can --show-languages --show-capital --show-borders --show-flag
 
     [ "${lines[0]}" = "Name: Canada" ]
     [ "${lines[1]}" = "Code: CAN" ]
@@ -24,7 +24,7 @@
 }
 
 @test "Canada, langues, capitale, frontieres, drapeau, format dot" {
-	run ~/INF3135/tp2/inf3135-aut2016-tp2/bin/tp2 --country can --show-languages --show-capital --show-borders --show-flag --output-format dot
+	run ./bin/tp2 --country can --show-languages --show-capital --show-borders --show-flag --output-format dot
     
     [ "${lines[0]}" = "graph {" ]
     [ "${lines[1]}" = "    CAN [" ]
@@ -43,19 +43,19 @@
 }
 
 @test "Canada, langues, capitale, frontieres, drapeau, fichier dot" {
-	run ~/INF3135/tp2/inf3135-aut2016-tp2/bin/tp2 --country can --show-languages --show-capital --show-borders --output-format dot --output-filename test.dot
+	run ./bin/tp2 --country can --show-languages --show-capital --show-borders --output-format dot --output-filename test.dot
     [ "$output" = "" ]
     rm test.dot
 }
 
 @test "Output-filename aucun nom donné" {
-	run ~/INF3135/tp2/inf3135-aut2016-tp2/bin/tp2 --country can --show-languages --show-capital --show-borders --output-format dot --output-filename 
+	run ./bin/tp2 --country can --show-languages --show-capital --show-borders --output-format dot --output-filename 
     [ "${lines[0]}" = "/home/jean-lou/INF3135/tp2/inf3135-aut2016-tp2/bin/tp2: option '--output-f       ormat' requires an argument" ]
     [ "${lines[1]}" = "Try using 'bin/tp2 --help' for more information." ]
 }
 
 @test "Option inexistante" {
-    run ~/INF3135/tp2/inf3135-aut2016-tp2/bin/tp2 --country can --show-languages --show-capital --show-borders --show-hello
+    run ./bin/tp2 --country can --show-languages --show-capital --show-borders --show-hello
     [ "${lines[0]}" = "/home/jean-lou/INF3135/tp2/inf3135-aut2016-tp2/bin/tp2: unrecognized optio       n '--show-hello' " ]
     [ "${lines[1]}" = "Try Using 'bin/tp2' --help        for more information " ]
 }
