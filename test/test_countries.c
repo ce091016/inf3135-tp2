@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <jansson.h>
+
+#include "CUnit/Basic.h"
+#include "CUnit/CUnit.h"
+#include "../src/countries.h"
+#include "../src/util.h"
+
+void test_jansson(void) {
+    json_error_t error;
+    json_t *root = json_load_file("data/countries/countries.json",0,&error);
+    json_t *pays = countries_getJsonObjectFromCountry("can", root);
+
+    CU_ASSERT_STRING_EQUAL_FATAL(countries_getNomPays(pays),"Canada")
+    CU_ASSERT_STRING_EQUAL_FATAL(countries_getCapitale(pays), "Ottawa")
+    CU_ASSERT_STRING_EQUAL_FATAL(countries_getCode(pays), "CAN")
+    CU_ASSERT_STRING_EQUAL_FATAL(countries_region(pays), "Americas")
+
+}
+
+void test_afg(void) {
+    json_error_t error;
+    json_t *root = json_load_file("data/countries/countries.json",0,&error);
+    json_t *pays = countries_getJsonObjectFromCountry("afg", root);
+
+    CU_ASSERT_STRING_EQUAL_FATAL(countries_getNomPays(pays), "Islamic Republic of Afghanistan")
+    CU_ASSERT_STRING_EQUAL_FATAL(countries_getCapitale(pays), "Kabul")
+    CU_ASSERT_STRING_EQUAL_FATAL(countries_getCode(pays), "AFG")
+
+}
+
+int main() {
+    CU_pSuite pSuite = NULL;
+    // Initialisation
+    if (CU_initialize_registry() != CUE_SUCCESS )
+        return CU_get_error();
+
+    // Ajout d'une suite
+    pSuite = CU_add_suite("Testing des pays", NULL, NULL);
+    if (pSuite == NULL) {
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
+    // Ajout de tests a la suite
+    if (CU_add_test(pSuite, "Test Canada",     test_jansson)  == NULL ||
+        CU_add_test(pSuite, "Test Afghanistan", test_afg) == NULL) {
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
+    // Ajout de tests a la suite
+    if (CU_add_test(pSuite, "Test chargement du fichier", test_jansson)  == NULL) {
+        CU_cleanup_registry();
+        return CU_get_error();
+    }
+
+    // Lancement des tests
+    CU_basic_set_mode(CU_BRM_VERBOSE);
+    CU_basic_run_tests();
+    CU_cleanup_registry();
+    return CU_get_error();
+}
