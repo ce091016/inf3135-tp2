@@ -67,6 +67,8 @@ clean:
 	rm -f *.txt
 	rm -f *.dot
 	rm -f *.png
+	rm -f $(TEST_PATH)/*.o
+	rm -f $(TEST_PATH)/$(EXEC_TEST)
 
 test: test/test_countries test1 test2
 
@@ -77,6 +79,6 @@ $(OBJECTS_TEST): $(TEST_PATH)/%.o : $(TEST_PATH)/%.c
 	@$ $(CC) $(CFLAGS) -c $< -o $@
 
 test1: 
-	bats test/testJLH.bats
+	bats test/batsTests.bats
 test2: 
 	$(TEST_PATH)/$(EXEC_TEST)

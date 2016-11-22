@@ -50,12 +50,12 @@
 
 @test "Output-filename aucun nom donné" {
 	run ./bin/tp2 --country can --show-languages --show-capital --show-borders --output-format dot --output-filename 
-    [ "${lines[0]}" = "/home/jean-lou/INF3135/tp2/inf3135-aut2016-tp2/bin/tp2: option '--output-f       ormat' requires an argument" ]
+    [ "${lines[0]}" = "./bin/tp2: option '--output-filename' requires an argument" ]
     [ "${lines[1]}" = "Try using 'bin/tp2 --help' for more information." ]
 }
 
 @test "Option inexistante" {
     run ./bin/tp2 --country can --show-languages --show-capital --show-borders --show-hello
-    [ "${lines[0]}" = "/home/jean-lou/INF3135/tp2/inf3135-aut2016-tp2/bin/tp2: unrecognized optio       n '--show-hello' " ]
-    [ "${lines[1]}" = "Try Using 'bin/tp2' --help        for more information " ]
+    [ "${lines[0]}" = "./bin/tp2: unrecognized option '--show-hello'" ]
+    [ "${lines[1]}" = "Try using 'bin/tp2 --help' for more information." ]
 }
