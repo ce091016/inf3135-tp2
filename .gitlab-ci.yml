@@ -22,4 +22,3 @@ suite2:
         - make 
         - make test/test_countries
         - make test2
->>>>>>> fc1d97c687ee7bae8341909b6d21f94cee5b2bf2
