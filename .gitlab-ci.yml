@@ -6,7 +6,7 @@ before_script:
   - export PATH=$PATH:/tmp/local/bin
 
 build:
-	stage: build
+    stage: build
 	script:
 		- make
 
@@ -14,11 +14,11 @@ suite1:
 	stage: test
 	script:
         - make
-		- make test1
+		- bats test/testsBats.bats
 
-suite2:
-	stage: test
-	script:
-        - make 
-        - make test/test_countries
-        - make test2
+#suite2:
+#    stage: test
+#	script:
+#        - make 
+#        - make test/test_countries
+#        - make test2
