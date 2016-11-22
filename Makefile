@@ -57,7 +57,7 @@ $(OBJECTS): $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 .PHONY: clean test data
 
 data:
-	git pull--recurse-submodules
+	git pull --recurse-submodules
 	git submodule update --remote --recursive
 
 clean:
