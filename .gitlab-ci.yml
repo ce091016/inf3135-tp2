@@ -1,0 +1,24 @@
+before_script:
+  - apt-get update -qq && apt-get -y install libcunit1 libcunit1-doc libcunit1-dev libjansson-dev graphviz
+  - git clone https://github.com/sstephenson/bats.git /tmp/bats
+  - mkdir -p /tmp/local
+  - bash /tmp/bats/install.sh /tmp/local
+  - export PATH=$PATH:/tmp/local/bin
+
+build:
+	stage: build
+	script:
+		- make
+
+suite1:
+	stage: test
+	script:
+        - make
+		- make test1
+
+suite2:
+	stage: test
+	script:
+        - make 
+        - make test/test_countries
+        - make test2
