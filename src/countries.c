@@ -39,7 +39,8 @@ json_t *countries_getJsonObjectFromCountry(const char *code, json_t *tabPays) {
             return returnObj;
         }
     }
-    return NULL;
+    printf("Code pays inexistant.\n");
+    exit(0);
 }
 
 const char * countries_getCode(json_t *pays) {
