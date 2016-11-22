@@ -6,13 +6,6 @@
     [ "${lines[1]}" = "Code: CAN" ]
 }
 
-@test "Canada" {
-    run ./bin/tp2 --country can
-   
-    [ "${lines[0]}" = "Name: Canada" ]
-    [ "${lines[1]}" = "Code: CAN" ]
-}
-
 @test "Canada, langues, capitale, frontieres" {
     run ./bin/tp2 --country can --show-languages --show-capital --show-borders --show-flag
 
@@ -48,7 +41,7 @@
     rm test.dot
 }
 
-@test "Output-filename aucun nom donné" {
+@test "Option '--output-filename' sans argument" {
 	run ./bin/tp2 --country can --show-languages --show-capital --show-borders --output-format dot --output-filename 
     [ "${lines[0]}" = "./bin/tp2: option '--output-filename' requires an argument" ]
     [ "${lines[1]}" = "Try using 'bin/tp2 --help' for more information." ]
@@ -58,4 +51,25 @@
     run ./bin/tp2 --country can --show-languages --show-capital --show-borders --show-hello
     [ "${lines[0]}" = "./bin/tp2: unrecognized option '--show-hello'" ]
     [ "${lines[1]}" = "Try using 'bin/tp2 --help' for more information." ]
+}
+
+@test "Message d'aide" {
+    run ./bin/tp2 --country can --show-borders --help
+    [ "${lines[0]}" = "Usage: bin/tp2 [--help] [--output-format FORMAT] [--output-filename FILENAME]" ]
+}
+
+@test "Code pays inexistant" {
+    run ./bin/tp2 --country hello --show-borders --show-languages
+    [ "${lines[0]}" = "Code pays inexistant." ]
+}
+
+@test "Format 'png' sans nom." {
+    run ./bin/tp2 --country can --output-format png --show-flag 
+    [ "${lines[0]}" = "Filename required for 'png' format." ]
+}
+
+@test "Format 'text' sans '--output-filename'" {
+    run ./bin/tp2 --country can --output-format text --show-flag 
+    [ "${lines[0]}" = "Name: Canada" ]
+	[ "${lines[1]}" = "Code: CAN" ]
 }
