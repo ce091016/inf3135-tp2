@@ -12,9 +12,8 @@ Mentionner le contexte (cours, sigle, université, etc.).
 
 ## Plateformes supportées
 
-Indiquez ici la liste des plateformes sur lesquelles le projet a été testé
-(MacOS, Ubuntu, Mint, Serveur Matl etc.). N'oubliez pas de préciser la version
-de la plateforme (MacOS 10.10.5 Yosemite, Ubuntu 14.04 LTS, etc.).
+Ce projet a été testé sur une seule plateforme : Ubuntu 16.04 LTS.
+Cependant, il devrait être fonctionnel pour les autres versions de linux.
 
 ## Dépendances
 
@@ -31,25 +30,23 @@ et comment lancer la suite de tests automatiques (make test ?), comment
 nettoyer le dossier (make clean ?).
 
 ## Fonctionnement
-Exemple 1:
-Entrée:
+**Entrée:**
 ~~~~
     bin/tp2 --country ury
 ~~~~
 
-Affiche:
+**Sortie:**
 ~~~~
     Name : Oriental Republic of Uruguay
     Code : URY
 ~~~~
 
-Exemple 2:
-Entrée:
+**Entrée:**
 ~~~~
     bin/tp2 --country afg --show-capital --show-languages --show-borders
 ~~~~
 
-Affiche:
+**Sortie:**
 ~~~~   
     Name : Islamic Republic of Afghanistan
     Code : AFG
@@ -58,13 +55,12 @@ Affiche:
     Borders : IRN, PAK, TKM, UZB, TJK, CHN
 ~~~~
 
-Exemple 3:
-Entrée:
+**Entrée:**
 ~~~~
      bin/tp2 --country arm --show-languages --show-capital --show-borders --show-flag --output-format dot
 ~~~~
 
-Affiche:
+**Sortie:**
 ~~~~
  graph {
     ARM [
