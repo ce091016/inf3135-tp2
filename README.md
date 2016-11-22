@@ -79,9 +79,27 @@ nettoyer le dossier (make clean ?).
 
 ## Contenu du projet
 
-Décrivez brièvement chacun des fichiers contenus dans le projet. Utilisez
-une liste à puce et décrivez-les de façon significative (une phrase par
-fichier)
+Racine du projet
+* .gitignore: contient une liste de fichiers que Git peut ignorer lors d'un commit
+* .gitlab-ci.yml: fichier permettant l'intégration continue des tests
+* .gitmodules: 
+* Makefile: fichier permettant une compilation rapide et un nettoyage de repertoires rapide
+* README.md: fichier contenant les informations importantes sur le projet
+* testsBats.bats: la serie de tests que le projet doit verifier
+Répertoire src
+* tp2.c: code source du fichier exécutable
+* countries.c: code source permettant de manipuler la base de données countries.json
+* countries.h: en-tête du fichier countries.c
+* graphviz.c: code source permettant de générer des fichiers au format .dot pour représenter 
+              graphiquement les pays de la base de données countries.json
+* graphviz.h: en-tête du fichier graphviz.c
+* input.c:
+* input.h:
+* output.c:
+* output.h:
+* util.c: contient des fonctions utiles qui peuvent n'appartiennent pas à un module en particulier
+* util.h: en-tête du fichier util.c
+
 
 ## Références
 
@@ -121,11 +139,11 @@ Markdown](https://docs.gitlab.com/ce/user/markdown.html#task-lists) :
   - [x] Fonctions utiles n'appartenant pas à un module en particulier
         (responsable: Olivier)
 
-- [ ] Tests (responsable: Jean-Lou et Olivier)
+- [ ] Tests (responsables: Jean-Lou et Olivier)
 
 
 - [ ] Autres
 
-  - [ ] Makefile (responsable: Jean-Lou)
+  - [ ] Makefile (responsables: Jean-Lou et Olivier)
 
   - [ ] Respect de la structure des répertoires (responsable: Jean-Lou)
