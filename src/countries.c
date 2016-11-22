@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 #include "countries.h"
 #include "util.h"
@@ -39,7 +40,7 @@ json_t *countries_getJsonObjectFromCountry(const char *code, json_t *tabPays) {
             return returnObj;
         }
     }
-    printf("Code pays inexistant.\n");
+    printf("Invalid country code.\n");
     exit(0);
 }
 
@@ -143,13 +144,21 @@ const char * countries_region(json_t *pays) {
 json_t * countries_paysSelonRegion(json_t *tabPays, char *region) {
     json_t *tabPaysRegion = json_array(); 
     int i;
+    bool empty = true;
+
     for (i=0; i<json_array_size(tabPays); i++) {
         json_t *paysTemp = json_array_get(tabPays, i);
         if (strcmp(countries_region(paysTemp),region) == 0) {
-            json_array_append(tabPaysRegion, paysTemp);                
+            json_array_append(tabPaysRegion, paysTemp);
+            empty = false;
         }
     }
-    return tabPaysRegion;
+    if(empty){
+        printf("Invalid region.\n");
+        exit(0);
+    }else{
+        return tabPaysRegion;
+    }
 }
 
 //a faire:

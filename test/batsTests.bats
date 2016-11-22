@@ -41,6 +41,13 @@
     rm test.dot
 }
 
+@test "Canada, langues, capitale, frontieres, drapeau, fichier txt" {
+	run ./bin/tp2 --country can --show-languages --show-capital --show-borders --output-format text --output-filename test.txt
+    [ "$output" = "" ]
+    rm test.txt
+}
+
+
 @test "Option '--output-filename' sans argument" {
 	run ./bin/tp2 --country can --show-languages --show-capital --show-borders --output-format dot --output-filename 
     [ "${lines[0]}" = "./bin/tp2: option '--output-filename' requires an argument" ]
@@ -60,8 +67,14 @@
 
 @test "Code pays inexistant" {
     run ./bin/tp2 --country hello --show-borders --show-languages
-    [ "${lines[0]}" = "Code pays inexistant." ]
+    [ "${lines[0]}" = "Invalid country code." ]
 }
+
+@test "Region inexistante" {
+    run ./bin/tp2 --region hello --show-borders --show-languages
+    [ "${lines[0]}" = "Invalid region." ]
+}
+
 
 @test "Format 'png' sans nom." {
     run ./bin/tp2 --country can --output-format png --show-flag 
