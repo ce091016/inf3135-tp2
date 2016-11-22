@@ -13,5 +13,13 @@ build:
 suite1:
 	stage: test
 	script:
-		- make
-		-	bats test/batsTests.bats
+        - make
+		- make test1
+
+suite2:
+	stage: test
+	script:
+        - make 
+        - make test/test_countries
+        - make test2
+>>>>>>> fc1d97c687ee7bae8341909b6d21f94cee5b2bf2
