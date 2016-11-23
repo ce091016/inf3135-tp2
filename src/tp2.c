@@ -36,13 +36,14 @@
 #define SHOW_FLAG 8
 #define COUNTRY 9
 #define REGION 11
+#define PATH "./data/countries/countries.json"
 
 // Main
 // ----
 
 int main (int argc, char * argv[]) {
     json_error_t error;
-    json_t *root = json_load_file("data/countries/countries.json",0,&error);
+    json_t *root = json_load_file(PATH, 0, &error);
     char *filename;
     bool hasName = false;
     char **rep = (char**)calloc(TAILLE_MAX + 1, sizeof(char*)); 
