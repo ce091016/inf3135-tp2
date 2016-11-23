@@ -1,10 +1,10 @@
 # Travail pratique 2
 
 ## Description
-Ce projet permet d'aller chercher dans informations concernant des pays dans une base de donnée de format Jansson. En effet, le sous-module 'countries' permet d'aller retrouver les informations que l'utilisateur souhaite avoir. (Nom pays, code pays, frontières, langues et drapeau.) 
-L'utilisateur peut choisir de voir un seul, pays, une région entière ou tous les pays de la base de données.
+- Ce projet permet d'aller chercher dans informations concernant des pays dans une base de donnée de format Jansson. En effet, le sous-module 'countries' permet d'aller retrouver les informations que l'utilisateur souhaite avoir. (Nom pays, code pays, frontières, langues et drapeau.) 
+- L'utilisateur peut choisir de voir un seul, pays, une région entière ou tous les pays de la base de données.
 Veuillez entrer la commande 'bin/tp2 --help' pour plus d'informations
-Ce projet a été réalisé dans le cadre du cours Construction et maintenance logicielle (INF3135)
+- Ce projet a été réalisé dans le cadre du cours Construction et maintenance logicielle (INF3135)
 Université du Québec à Montréal.
 
 ## Auteurs
