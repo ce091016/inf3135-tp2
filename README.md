@@ -1,9 +1,11 @@
 # Travail pratique 2
 
 ## Description
-
-Description du projet en quelques phrases.
-Mentionner le contexte (cours, sigle, université, etc.).
+Ce projet permet d'aller chercher dans informations concernant des pays dans une base de donnée de format Jansson. En effet, le sous-module 'countries' permet d'aller retrouver les informations que l'utilisateur souhaite avoir. (Nom pays, code pays, frontières, langues et drapeau.) 
+L'utilisateur peut choisir de voir un seul, pays, une région entière ou tous les pays de la base de données.
+Veuillez entrer la commande 'bin/tp2 --help' pour plus d'informations
+Ce projet a été réalisé dans le cadre du cours Construction et maintenance logicielle (INF3135)
+Université du Québec à Montréal.
 
 ## Auteurs
 
@@ -13,7 +15,7 @@ Mentionner le contexte (cours, sigle, université, etc.).
 ## Plateformes supportées
 
 Ce projet a été testé sur une seule plateforme : Ubuntu 16.04 LTS.
-Cependant, il devrait être fonctionnel pour les autres versions de linux.
+Cependant, il devrait être fonctionnel sur les autres versions de linux et sur MacOs.
 
 ## Dépendances
 
@@ -107,10 +109,9 @@ Citez vos sources ici, s'il y a lieu.
 
 ## Statut
 
-Indiquez le statut actuel du projet et les bogues connus s'il y a lieu. Aussi,
-utilisez cette section pour indiquer la liste des tâches à effectuer pour
-compléter le projet en utilisant le [format spécial
-Markdown](https://docs.gitlab.com/ce/user/markdown.html#task-lists) :
+Aucun bogue reconnu pour l'instant.
+
+Cependant, une optimisation de la création du fichier '.png' devrait être accomplie; il serait préférable d'éviter la création du fichier temporaire.
 
 - [x] Module graphviz
 
@@ -122,11 +123,11 @@ Markdown](https://docs.gitlab.com/ce/user/markdown.html#task-lists) :
 
 - [x] Module input
 
-  - [x] Lecture et vérification des entrées (responsable : Jean-Lou) 
+  - [x] Lecture et vérification des entrées (responsable: Jean-Lou) 
 
 - [x] Module output
 
-  - [ ] Intégration des modules input, countries et graphviz 
+  - [x] Intégration des modules input, countries et graphviz 
         afin d'afficher correctement(responsable: Jean-Lou)
 
 - [x] Module exécutable
@@ -139,11 +140,13 @@ Markdown](https://docs.gitlab.com/ce/user/markdown.html#task-lists) :
   - [x] Fonctions utiles n'appartenant pas à un module en particulier
         (responsable: Olivier)
 
-- [ ] Tests (responsables: Jean-Lou et Olivier)
+- [x] Tests (responsables: Jean-Lou et Olivier)
 
 
-- [ ] Autres
+- [x] Autres
 
-  - [ ] Makefile (responsables: Jean-Lou et Olivier)
+  - [x] Makefile (responsables: Jean-Lou et Olivier)
 
-  - [ ] Respect de la structure des répertoires (responsable: Jean-Lou)
+  - [x] Respect de la structure des répertoires (responsable: Jean-Lou)
+
+  - [x] Documentation et README (respomsables: Jean-Lou et Olivier)
