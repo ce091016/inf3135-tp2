@@ -49,6 +49,11 @@ int main (int argc, char * argv[]) {
     char **rep = (char**)calloc(TAILLE_MAX + 1, sizeof(char*)); 
     input(argc, argv, rep);
 
+    if(rep[HELP] != NULL){
+        help();
+        exit(0);
+    }
+
     if(rep[OUTPUT_FORMAT] != NULL){
 
         if(rep[OUTPUT_FILENAME + 1] != NULL){

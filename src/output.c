@@ -56,11 +56,6 @@ void textFile(char **rep, char *filename, json_t *root){
         exit(1);
     }
     
-    if(rep[HELP] != NULL){
-        help();
-        exit(0);
-    } 
-    
     if(rep[COUNTRY] != NULL){
         
         pays = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
@@ -119,11 +114,6 @@ void dotFile(char **rep, char *filename, json_t *root){
     int flag;
     bool onlyOneCountry = false;
     
-    if(rep[HELP] != NULL){
-        help();
-        exit(0);
-    } 
-    
     if(rep[COUNTRY] != NULL){
        
         pays = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
@@ -181,11 +171,6 @@ void stdoutText(char **rep, json_t *root){
     bool onlyOneCountry = false;
     int i = 0;
     
-    if(rep[HELP] != NULL){
-        help();
-        exit(0);
-    } 
-    
     if(rep[COUNTRY] != NULL){
         
         pays = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
@@ -227,12 +212,8 @@ void stdoutText(char **rep, json_t *root){
             printf("Borders: %s\n", frontieres);
             free(frontieres);
         }
-        
         i++;
-    
     }while(rep[COUNTRY] == NULL && i < json_array_size(values));
-
-    
 
     if(rep[REGION] != NULL && rep[COUNTRY] != NULL) printf(COUNTRY_REGION_CONFLICT_MSG);
 }

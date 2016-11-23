@@ -40,8 +40,7 @@ json_t *countries_getJsonObjectFromCountry(const char *code, json_t *tabPays) {
             return returnObj;
         }
     }
-    printf("Invalid country code.\n");
-    exit(0);
+    return NULL;
 }
 
 const char * countries_getCode(json_t *pays) {
@@ -53,6 +52,11 @@ const char * countries_getCode(json_t *pays) {
 const char * countries_getNomPays(json_t *pays) {
     json_t * nom = (json_object_get(json_object_get(pays, "name"), "official"));
     const char * nomRetour = json_string_value(nom);
+    if(nomRetour == NULL){
+        printf("Invalid country code.\n");
+        exit(0);
+    }
+
     return nomRetour;
 }
 

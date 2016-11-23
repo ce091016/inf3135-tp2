@@ -86,3 +86,15 @@
     [ "${lines[0]}" = "Name: Canada" ]
 	[ "${lines[1]}" = "Code: CAN" ]
 }
+@test "Format de fichier non reconnu" {
+    run ./bin/tp2 --country can --output-format hello --show-flag 
+    [ "${lines[0]}" = "Invalid file format." ]
+}
+
+@test "Region et country activées" {
+    run ./bin/tp2 --country can --region Europe  
+    [ "${lines[0]}" = "Name: Canada" ]
+    [ "${lines[1]}" = "Code: CAN" ]
+    [ "${lines[2]}" = "Option '--country' activated; option '--region' ignored." ]
+}
+
