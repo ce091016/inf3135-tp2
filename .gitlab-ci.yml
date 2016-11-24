@@ -11,16 +11,14 @@ build:
         - make data 
         - make
     
-test:
+suite1:
     stage: test
     script:
         - make
-        - make test
-    allow_failure: true
+        - make test1
 
-#suite2:
-#    stage: test
-#	script:
-#        - make 
-#        - make test/test_countries
-#        - make test2
+suite2:
+    stage: test
+	script:
+        - make 
+        - make test2
