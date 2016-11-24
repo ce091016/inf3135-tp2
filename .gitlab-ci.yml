@@ -11,7 +11,7 @@ build:
         - make
         - make data  
     
-suite1:
+test:
     stage: test
     script:
         - make
