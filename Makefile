@@ -27,8 +27,8 @@ $(OBJECTS): $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 .PHONY: clean test data
 
 data:
-	git pull --recurse-submodules
-	git submodule update --remote --recursive
+	git submodule add https://github.com/ablondin/countries.git 
+	git submodule update 
 
 clean:
 	rm -f $(TEST_PATH)/$(EXEC_TEST)
