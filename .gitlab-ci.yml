@@ -19,6 +19,6 @@ suite1:
 
 suite2:
     stage: test
-	script:
+    script:
         - make 
         - make test2
