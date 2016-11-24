@@ -4,7 +4,6 @@ before_script:
   - mkdir -p /tmp/local
   - bash /tmp/bats/install.sh /tmp/local
   - export PATH=$PATH:/tmp/local/bin
-  - git clone git@gitlab.com:JonHallee/inf3135-aut2016-tp2.git 
 
 build:
     stage: build
