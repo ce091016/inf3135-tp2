@@ -8,11 +8,11 @@ before_script:
 build:
     stage: build
     script:
-        - make data 
+    - make data 
     
 test:
     stage: test
     script:
-        - make
-        - make test
+    - make
+    - make test
 
