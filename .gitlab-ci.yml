@@ -5,11 +5,14 @@ before_script:
   - bash /tmp/bats/install.sh /tmp/local
   - export PATH=$PATH:/tmp/local/bin
 
-build:
-    stage: build
+build1:
+    stage: build1
+    script:
+        - make data 
+build2:
+    stage: build2
     script:
         - make
-        - make data  
     
 test:
     stage: test
