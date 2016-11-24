@@ -26,6 +26,21 @@
 // Implementation
 // --------------
 
+
+// Fonctions privees
+// -----------------
+
+/**
+ * Cette fonction ecrit dans un fichier les informations voulues sur un pays en 
+ * respectant le format graphviz.
+ * 
+ * @param langues, 1 si on veut afficher les langues, 0 sinon
+ * @param capitale, 1 si on veut afficher la capitale, 0 sinon
+ * @param frontieres, 1 si on veut afficher les frontieres, 0 sinon
+ * @param flag, 1 si on veut afficher l'image du drapeau, 0 sinon
+ * @param pays, le pays dont on veut afficher les informations
+ * @param graphviz, un pointeur vers le fichier ouvert ou on veut ecrire
+*/
 void graphviz_ecrireUnPays(int langues, int capitale, int frontieres, int flag, json_t *pays, FILE * graphviz) {
     
     const char * codePays = countries_getCode(pays); 
@@ -72,6 +87,20 @@ void graphviz_ecrireUnPays(int langues, int capitale, int frontieres, int flag, 
     fprintf(graphviz, "%s%s", LABELFIN, FINPAYS);
 }
 
+/**
+ * Cette fonction ecrit dans un fichier les informations voulues sur tous 
+ * les pays d'un tableau passe en parametres. De plus, il definit les 
+ * liens entre les pays qui ont des frontieres communes pour que ces 
+ * pays soient relies dans graphviz en appelant la fonction 
+ * graphviz_ecrirePlusieursPays
+ *
+ * @param langues, 1 si on veut afficher les langues, 0 sinon
+ * @param capitale, 1 si on veut afficher la capitale, 0 sinon
+ * @param frontieres, 1 si on veut afficher les frontieres, 0 sinon
+ * @param flag, 1 si on veut afficher l'image du drapeau, 0 sinon
+ * @param pays, le pays dont on veut afficher les informations
+ * @param graphviz, un pointeur vers le fichier ouvert ou on veut ecrire
+*/
 void graphviz_ecrirePaysVoisins(json_t *tabPays, FILE * graphviz) {
     int i;
     for (i=0; i< json_array_size(tabPays); i++) {
@@ -94,6 +123,9 @@ void graphviz_ecrirePaysVoisins(json_t *tabPays, FILE * graphviz) {
         }
     }
 }
+
+// Fonctions publiques
+// -------------------
 
 void graphviz_ecrireUnSeulPays(int langues, int capitale, int frontieres, int flag, json_t *pays, const char * nomFichier) {
     FILE * graphviz = fopen(nomFichier, "w");
