@@ -50,6 +50,6 @@ $(OBJECTS_TEST): $(TEST_PATH)/%.o : $(TEST_PATH)/%.c
 	@$ $(CC) $(CFLAGS) -c $< -o $@
 
 test1: 
-	bats test/batsTests.bats
+	bats --tap test/batsTests.bats
 test2: 
 	$(TEST_PATH)/$(EXEC_TEST)
