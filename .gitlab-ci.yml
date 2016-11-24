@@ -11,8 +11,8 @@ build:
         - make data 
         - make
     
-test:
-    stage: test
+job:
+    stage: job
     script:
         - make
         - make test
