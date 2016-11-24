@@ -15,7 +15,7 @@ test:
     stage: test
     script:
         - make
-        - make test
+        - bats test/batsTests.bats
 
 #suite2:
 #    stage: test
