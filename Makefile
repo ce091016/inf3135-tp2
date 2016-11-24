@@ -18,13 +18,13 @@ TP2_O = $(OBJ_PATH)/tp2.o
 OBJECTS = $(SRC:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)
 OBJECTS_TEST = $(SRC_TEST:$(TEST_PATH)/%.c=$(TEST_PATH)/%.o)
 
+.PHONY: clean test data 
 
 $(BIN_PATH)/$(EXEC): $(OBJECTS) 
 	@$ $(CC) -o $@ $(OBJECTS) $(LIB)
 $(OBJECTS): $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 	@$ $(CC) $(CFLAGS) -c $< -o $@
 
-.PHONY: clean test data
 
 data:
 	git submodule add https://github.com/ablondin/countries.git 
