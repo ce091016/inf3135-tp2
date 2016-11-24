@@ -32,7 +32,6 @@
     [ "${lines[10]}" = "        </table>>" ]
     [ "${lines[11]}" = "    ];" ]
     [ "${lines[12]}" = "}" ]
-	
 }
 
 @test "Canada, langues, capitale, frontieres, drapeau, fichier dot" {
