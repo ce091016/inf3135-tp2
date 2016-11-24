@@ -7,14 +7,14 @@ before_script:
 
 build:
     stage: build
-	script:
+    script:
 		- make
-
+        - make data  
+    
 suite1:
-	stage: test
-	script:
-        - make
-		- bats test/testsBats.bats
+    stage: test
+    script:
+        - make test
 
 #suite2:
 #    stage: test
