@@ -9,16 +9,10 @@ build:
     stage: build
     script:
         - make data 
-        - make
     
-suite1:
+test:
     stage: test
     script:
         - make
-        - make test1
+        - make test
 
-suite2:
-    stage: test
-    script:
-        - make 
-        - make test2
