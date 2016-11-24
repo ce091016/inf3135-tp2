@@ -11,11 +11,12 @@ build:
         - make data 
         - make
     
-job:
-    stage: job
+test:
+    stage: test
     script:
         - make
         - make test
+    allow_failure: true
 
 #suite2:
 #    stage: test
