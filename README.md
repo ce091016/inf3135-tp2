@@ -27,9 +27,9 @@ pas d'indiquer
 
 ## Installation
 
-Expliquez comment rendre le projet fonctionnel (commandes make et make data ?)
-et comment lancer la suite de tests automatiques (make test ?), comment
-nettoyer le dossier (make clean ?).
+- Afin de rendre le projet fonctionnel, il suffit de se rendre à la racine du projet et d'entrer la commande 'make data'. Ceci permettera au projet d'ajouter ou de mettre à jour le sous-module countries.
+- Pour compiler le projet, demeurer dans le répertoire racine du projet et entrer la commande 'make'.
+- Afin de nettoyer les dossiers des fichiers objets, fichiers 'dot, fichiers 'text' et fichiers 'png', il suffit d'entrer la commande à la racine du projet 'make clean'.
 
 ## Fonctionnement
 **Entrée:**
@@ -81,14 +81,14 @@ nettoyer le dossier (make clean ?).
 
 ## Contenu du projet
 
-Racine du projet
+**Racine du projet**
 * .gitignore: contient une liste de fichiers que Git peut ignorer lors d'un commit
 * .gitlab-ci.yml: fichier permettant l'intégration continue des tests
 * .gitmodules: 
 * Makefile: fichier permettant une compilation rapide et un nettoyage de repertoires rapide
 * README.md: fichier contenant les informations importantes sur le projet
 * testsBats.bats: la serie de tests que le projet doit verifier
-Répertoire src
+**Répertoire src**
 * tp2.c: code source du fichier exécutable
 * countries.c: code source permettant de manipuler la base de données countries.json
 * countries.h: en-tête du fichier countries.c
@@ -109,9 +109,9 @@ Citez vos sources ici, s'il y a lieu.
 
 ## Statut
 
-Aucun bogue reconnu pour l'instant.
+- Aucun bogue reconnu pour l'instant.
 
-Cependant, une optimisation de la création du fichier '.png' devrait être accomplie; il serait préférable d'éviter la création du fichier temporaire.
+- Cependant, une optimisation de la création du fichier '.png' devrait être accomplie; il serait préférable d'éviter la création du fichier temporaire.
 
 - [x] Module graphviz
 
