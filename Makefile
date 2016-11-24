@@ -28,8 +28,9 @@ $(OBJECTS): $(OBJ_PATH)/%.o : $(SRC_PATH)/%.c
 
 
 data:
-	git submodule init ./data/countries
-	git submodule update ./data/countries
+	git submodule add  https://github.com/ablondin/countries ./data/
+	git submodule init ./data/
+	git submodule update ./data/
 
 clean:
 	rm -f $(TEST_PATH)/$(EXEC_TEST)
