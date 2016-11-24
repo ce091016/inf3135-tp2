@@ -15,7 +15,7 @@ test:
     stage: test
     script:
         - make
-        - make test
+        - make test2
 
 #suite2:
 #    stage: test
