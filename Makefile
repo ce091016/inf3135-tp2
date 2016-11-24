@@ -17,6 +17,7 @@ OBJ_SANS_TP2 = $(filter-out $(TP2_O), $(OBJ))
 TP2_O = $(OBJ_PATH)/tp2.o
 OBJECTS = $(SRC:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)
 OBJECTS_TEST = $(SRC_TEST:$(TEST_PATH)/%.c=$(TEST_PATH)/%.o)
+BATS = batsTests.bats
 
 .PHONY: clean test data 
 
@@ -51,6 +52,6 @@ $(OBJECTS_TEST): $(TEST_PATH)/%.o : $(TEST_PATH)/%.c
 	@$ $(CC) $(CFLAGS) -c $< -o $@
 
 test1: 
-	bats --tap test/batsTests.bats
+	bats $(TEST_PATH)/$(BATS)
 test2: 
 	$(TEST_PATH)/$(EXEC_TEST)
