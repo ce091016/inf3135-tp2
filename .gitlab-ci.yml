@@ -4,7 +4,7 @@ before_script:
   - mkdir -p /tmp/local
   - bash /tmp/bats/install.sh /tmp/local
   - export PATH=$PATH:/tmp/local/bin
-  - git submodule add https://github.com/ablondin/countries.git data/countries
+
 
 build:
     stage: build
