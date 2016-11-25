@@ -9,12 +9,13 @@ before_script:
 build:
     stage: build
     script:
-    - make data 
     - make
+    - make data
     
 test:
     stage: test
     script:
     - make
+    - make data  
     - make test
 
