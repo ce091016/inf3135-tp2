@@ -39,7 +39,7 @@ void input(int argc, char *argv[],char *rep[]){
                 {"show-borders", no_argument, &option_flag,    6},
                 {"show-flag", no_argument, &option_flag,    7},
                 {"country", required_argument, &option_flag,    8},
-                {"region", required_argument, &option_flag,    9},
+                {"getRegion", required_argument, &option_flag,    9},
                 {0, 0, 0, 0}
             };
         int option_index = 0;
@@ -94,7 +94,7 @@ void input(int argc, char *argv[],char *rep[]){
                 break;
 
             case 9:
-                rep[11] = "region";
+                rep[11] = "getRegion";
                 rep[12] = optarg;
                 break;
 

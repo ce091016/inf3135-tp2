@@ -6,7 +6,7 @@
     [ "${lines[1]}" = "Code: CAN" ]
 }
 
-@test "Canada, langues, capitale, frontieres" {
+@test "Canada, getObjectLanguages, capitale, getObjectBorders" {
     run ./bin/tp2 --country can --show-languages --show-capital --show-borders --show-flag
 
     [ "${lines[0]}" = "Name: Canada" ]
@@ -16,7 +16,7 @@
     [ "${lines[4]}" = "Borders: USA" ]
 }
 
-@test "Canada, langues, capitale, frontieres, drapeau, format dot" {
+@test "Canada, getObjectLanguages, capitale, getObjectBorders, drapeau, format dot" {
 	run ./bin/tp2 --country can --show-languages --show-capital --show-borders --show-flag --output-format dot
     
     [ "${lines[0]}" = "graph {" ]
@@ -34,13 +34,13 @@
     [ "${lines[12]}" = "}" ]
 }
 
-@test "Canada, langues, capitale, frontieres, drapeau, fichier dot" {
+@test "Canada, getObjectLanguages, capitale, getObjectBorders, drapeau, fichier dot" {
 	run ./bin/tp2 --country can --show-languages --show-capital --show-borders --output-format dot --output-filename test.dot
     [ "$output" = "" ]
     rm test.dot
 }
 
-@test "Canada, langues, capitale, frontieres, drapeau, fichier txt" {
+@test "Canada, getObjectLanguages, capitale, getObjectBorders, drapeau, fichier txt" {
 	run ./bin/tp2 --country can --show-languages --show-capital --show-borders --output-format text --output-filename test.txt
     [ "$output" = "" ]
     rm test.txt
@@ -70,8 +70,8 @@
 }
 
 @test "Region inexistante" {
-    run ./bin/tp2 --region hello --show-borders --show-languages
-    [ "${lines[0]}" = "Invalid region." ]
+    run ./bin/tp2 --getRegion hello --show-borders --show-languages
+    [ "${lines[0]}" = "Invalid getRegion." ]
 }
 
 
@@ -91,9 +91,9 @@
 }
 
 @test "Region et country activées" {
-    run ./bin/tp2 --country can --region Europe  
+    run ./bin/tp2 --country can --getRegion Europe  
     [ "${lines[0]}" = "Name: Canada" ]
     [ "${lines[1]}" = "Code: CAN" ]
-    [ "${lines[2]}" = "Option '--country' activated; option '--region' ignored." ]
+    [ "${lines[2]}" = "Option '--country' activated; option '--getRegion' ignored." ]
 }
 

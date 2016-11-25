@@ -40,22 +40,22 @@ bool textFileTest(){
 void test_jansson(void) {
     json_error_t error;
     json_t *root = json_load_file("data/countries/countries.json",0,&error);
-    json_t *pays = countries_getJsonObjectFromCountry("can", root);
+    json_t *pays = countries_getCountry("can", root);
 
-    CU_ASSERT_STRING_EQUAL_FATAL(countries_getNomPays(pays),"Canada")
-    CU_ASSERT_STRING_EQUAL_FATAL(countries_getCapitale(pays), "Ottawa")
+    CU_ASSERT_STRING_EQUAL_FATAL(countries_getName(pays),"Canada")
+    CU_ASSERT_STRING_EQUAL_FATAL(countries_getCapital(pays), "Ottawa")
     CU_ASSERT_STRING_EQUAL_FATAL(countries_getCode(pays), "CAN")
-    CU_ASSERT_STRING_EQUAL_FATAL(countries_region(pays), "Americas")
+    CU_ASSERT_STRING_EQUAL_FATAL(countries_getRegion(pays), "Americas")
 
 }
 
 void test_afg(void) {
     json_error_t error;
     json_t *root = json_load_file("data/countries/countries.json",0,&error);
-    json_t *pays = countries_getJsonObjectFromCountry("afg", root);
+    json_t *pays = countries_getCountry("afg", root);
 
-    CU_ASSERT_STRING_EQUAL_FATAL(countries_getNomPays(pays), "Islamic Republic of Afghanistan")
-    CU_ASSERT_STRING_EQUAL_FATAL(countries_getCapitale(pays), "Kabul")
+    CU_ASSERT_STRING_EQUAL_FATAL(countries_getName(pays), "Islamic Republic of Afghanistan")
+    CU_ASSERT_STRING_EQUAL_FATAL(countries_getCapital(pays), "Kabul")
     CU_ASSERT_STRING_EQUAL_FATAL(countries_getCode(pays), "AFG")
 
 }
