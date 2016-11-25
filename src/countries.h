@@ -29,7 +29,7 @@
  * @return, l'objet json du pays voulu, ou NULL si le pays ne fait pas partie
  * du tableau passe en parametre
 */
-json_t* countries_getCountry(const char * code, json_t* tabPays); 
+json_t* countries_getJsonObjectFromCountry(const char * code, json_t* tabPays); 
 
 /*
  * Cette fonction retourne le code du pays passe en parametre
@@ -46,7 +46,7 @@ const char * countries_getCode(json_t *pays);
  * @pays, le pays dont on veut le nom
  * @return, la chaine de caracteres representant le nom
 */
-const char * countries_getName(json_t * pays);
+const char * countries_getNomPays(json_t * pays);
 
 /*
  * Cette fonction retourne la capitale du pays passe en parametre
@@ -54,99 +54,99 @@ const char * countries_getName(json_t * pays);
  * @param pays, le pays dont on veut la capitale
  * @return, la chaine de caracteres representant la capitale
 */
-const char * countries_getCapital(json_t * pays);
+const char * countries_getCapitale(json_t * pays);
 
 /*
- * Cette fonction ecrit les getObjectBorders d'un pays separees par 
+ * Cette fonction ecrit les frontieres d'un pays separees par 
  * une virgule dans une chaine de caracteres deja initialisee
  * dont le pointeur est passe en parametre.
  *
- * @param pays, le pays dont on veut les getObjectBorders
+ * @param pays, le pays dont on veut les frontieres
  * @param chaine, le pointeur vers la chaine ou on veut ecrire
- * les getObjectBorders
+ * les frontieres
 */
-void countries_writeBorders(json_t * pays, char *chaine);
+void countries_frontieres2(json_t * pays, char *chaine);
 
 /*
  * Cette fonction retourne le nombre de caracteres necessaires
  * pour qu'une chaine de caracteres puisse stocker toutes les
- * getObjectBorders separees par une virgule et un espacedu pays 
+ * frontieres separees par une virgule et un espacedu pays 
  * passe en parametre
  *
  * @param pays, le pays dont on veut connaitre la taille d'une 
- * chaine permettant de stocker ses getObjectBorders
+ * chaine permettant de stocker ses frontieres
  * @return, le nombre de caracteres, incluant le '\0'
 */
-int countries_stringLengthBorders(json_t *pays);
+int countries_nbCaracteresFrontieres(json_t *pays);
 
 /*
  * Cette fonction retourne le nombre de caracteres necessaires
  * pour qu'une chaine de caracteres puisse stocker toutes les 
- * getObjectLanguages separees par une virgule et un espace du pays passe 
+ * langues separees par une virgule et un espace du pays passe 
  * en parametre
  *
  * @param pays, le pays dont on veut connaitre la taille d'une
- * chaine permettant de stocker ses getObjectLanguages
+ * chaine permettant de stocker ses langues
  * @return, le nombre de caracteres, incluant le '\0'
 */
-int countries_stringLengthLanguages(json_t *pays);
+int countries_nbCaracteresLangues(json_t *pays);
 
 /*
- * Cette fonction ecrit les getObjectLanguages d'un pays separees par 
+ * Cette fonction ecrit les langues d'un pays separees par 
  * une virgule et un espace dans une chaine de caracteres deja 
  * initialisee avec la bonne taille dont le pointeur est passe 
  * en parametre
  *
- * @pays, le pays dont on veut les getObjectLanguages
+ * @pays, le pays dont on veut les langues
  * @chaine, le pointeur vers la chaine de caracteres ou ecrire
 */
-void countries_writeLanguages(json_t *pays, char *chaine);
+void countries_langues2(json_t *pays, char *chaine);
 
 /*
  * Cette fonction retourne le nombre de langue d'un pays passe 
  * en parametre
  *
- * @pays, le pays dont on veut connaitre le nombre de getObjectLanguages
- * @return, le nombre de getObjectLanguages du pays
+ * @pays, le pays dont on veut connaitre le nombre de langues
+ * @return, le nombre de langues du pays
 */
-int countries_numberOfLanguages(json_t * pays);
+int countries_nbLangues(json_t * pays);
 
 /*
- * Cette fonction retourne un object json contenant les getObjectLanguages
+ * Cette fonction retourne un object json contenant les langues
  * du pays passe en parametre
  *
- * @pays, le pays dont on veut l'objet json contenant les getObjectLanguages
- * @return, l'objet json contenant les getObjectLanguages du pays
+ * @pays, le pays dont on veut l'objet json contenant les langues
+ * @return, l'objet json contenant les langues du pays
  *
 */
-json_t * countries_getObjectLanguages(json_t *pays); 
+json_t * countries_langues(json_t *pays); 
 
 /*
- * Cette fonction retourne un objet json contenant les getObjectBorders
+ * Cette fonction retourne un objet json contenant les frontieres
  * du pays passe en parametre
  *
- * @pays, le pays dont on veut l'objet json contenant les getObjectBorders
- * @return, l'objet json contenant les getObjectBorders du pays
+ * @pays, le pays dont on veut l'objet json contenant les frontieres
+ * @return, l'objet json contenant les frontieres du pays
 */
-json_t *countries_getObjectBorders(json_t *pays);
+json_t *countries_frontieres(json_t *pays);
 
 /*
  * Cette fonction retourne un tableau json contenant les pays 
- * appartenant a la getRegion passee en parametre
+ * appartenant a la region passee en parametre
  *
  * @tabPays, le tableau contenant tous les pays de la base de donnees
- * @getRegion, la getRegion a laquelle on veut que les pays dans le tableau
+ * @region, la region a laquelle on veut que les pays dans le tableau
  * retourne appartiennent
- * @return, le tableau contenant les pays appartenant a la getRegion voulue
+ * @return, le tableau contenant les pays appartenant a la region voulue
 */
-json_t * countries_countriesInARegion(json_t *tabPays, char * getRegion);
+json_t * countries_paysSelonRegion(json_t *tabPays, char * region);
 
 
 /*
  * Cette fonction retourne une chaine de caracteres representant
- * la getRegion du pays passe en parametre
+ * la region du pays passe en parametre
  *
- * @pays, le pays dont on veut la getRegion
- * @return, la chaine de caracteres representant la getRegion
+ * @pays, le pays dont on veut la region
+ * @return, la chaine de caracteres representant la region
 */
-const char * countries_getRegion(json_t *pays);
+const char * countries_region(json_t *pays);

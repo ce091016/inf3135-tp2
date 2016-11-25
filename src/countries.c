@@ -26,7 +26,7 @@
 // Implémentation
 // --------------
     
-json_t *countries_getCountry(const char *code, json_t *tabPays) {
+json_t *countries_getJsonObjectFromCountry(const char *code, json_t *tabPays) {
     json_t * returnObj;
     int i;
     char codeParam[4];
@@ -49,7 +49,7 @@ const char * countries_getCode(json_t *pays) {
     return codeRetour;
 }
 
-const char * countries_getName(json_t *pays) {
+const char * countries_getNomPays(json_t *pays) {
     json_t * nom = (json_object_get(json_object_get(pays, "name"), "official"));
     const char * nomRetour = json_string_value(nom);
     if(nomRetour == NULL){
@@ -60,19 +60,19 @@ const char * countries_getName(json_t *pays) {
     return nomRetour;
 }
 
-const char * countries_getCapital(json_t *pays) {
+const char * countries_getCapitale(json_t *pays) {
     json_t *capitale = (json_object_get(pays, "capital"));
     const char *capitaleRetour = json_string_value(capitale);
     return capitaleRetour;
 }
 
-int countries_stringLengthBorders(json_t *pays){
-    json_t *getObjectBorders = countries_getObjectBorders(pays);
-    if (json_is_array(getObjectBorders)) {
-        if (json_array_size(getObjectBorders) == 0) {
+int countries_nbCaracteresFrontieres(json_t *pays){
+    json_t *frontieres = countries_frontieres(pays);
+    if (json_is_array(frontieres)) {
+        if (json_array_size(frontieres) == 0) {
             return 2;
         }
-        int nbFrontieres = json_array_size(getObjectBorders);
+        int nbFrontieres = json_array_size(frontieres);
         int nbCaracteres = (nbFrontieres * 3) + (nbFrontieres - 1)*2 + 1;
         return nbCaracteres;
 
@@ -81,87 +81,97 @@ int countries_stringLengthBorders(json_t *pays){
     }
 }
 
-void countries_writeBorders(json_t *pays, char *chaine) {
-    json_t *getObjectBorders = countries_getObjectBorders(pays);
-    int nbFrontieres = json_array_size(getObjectBorders);
-    if (json_array_size(getObjectBorders) > 0){ 
+void countries_frontieres2(json_t *pays, char *chaine) {
+    json_t *frontieres = countries_frontieres(pays);
+    int nbFrontieres = json_array_size(frontieres);
+    if (json_array_size(frontieres) > 0){ 
         int i;
-        sprintf(chaine,"%s", json_string_value(json_array_get(getObjectBorders,0)));
+        sprintf(chaine,"%s", json_string_value(json_array_get(frontieres,0)));
         for (i=1; i<nbFrontieres; i++) {
             sprintf(chaine + strlen(chaine), ", ");
-            sprintf(chaine + strlen(chaine), "%s", json_string_value(json_array_get(getObjectBorders,i)));
+            sprintf(chaine + strlen(chaine), "%s", json_string_value(json_array_get(frontieres,i)));
         }
     } else {
         sprintf(chaine, " ");
     }
 }
 
-int countries_stringLengthLanguages(json_t *pays) {
+int countries_nbCaracteresLangues(json_t *pays) {
     int nbCaracteres=0;
-    json_t *getObjectLanguages = json_object_get(pays, "languages");
-    void * iter = json_object_iter(getObjectLanguages);
+    json_t *langues = json_object_get(pays, "languages");
+    void * iter = json_object_iter(langues);
     json_t *langueTemp = json_object_iter_value(iter);
     nbCaracteres += strlen(json_string_value(langueTemp));
-    iter = json_object_iter_next(getObjectLanguages, iter);
+    iter = json_object_iter_next(langues, iter);
     while (iter) {
         langueTemp = json_object_iter_value(iter);
         nbCaracteres += strlen(json_string_value(langueTemp));
-        iter = json_object_iter_next(getObjectLanguages, iter);
+        iter = json_object_iter_next(langues, iter);
     }
-    nbCaracteres += 2*(countries_numberOfLanguages(pays)-1 );
+    nbCaracteres += 2*(countries_nbLangues(pays)-1 );
     nbCaracteres += 1;
     return nbCaracteres;
 }
 
-void countries_writeLanguages(json_t *pays, char * chaine) {
-    json_t *getObjectLanguages = json_object_get(pays, "languages");
-    void *iter = json_object_iter(getObjectLanguages);
+void countries_langues2(json_t *pays, char * chaine) {
+    json_t *langues = json_object_get(pays, "languages");
+    void *iter = json_object_iter(langues);
     json_t *langueTemp = json_object_iter_value(iter);
     sprintf(chaine, "%s", json_string_value(langueTemp));
-    iter = json_object_iter_next(getObjectLanguages, iter);
+    iter = json_object_iter_next(langues, iter);
     while (iter) {
         sprintf(chaine + strlen(chaine), ", ");
         langueTemp = json_object_iter_value(iter);
         sprintf(chaine + strlen(chaine), "%s", json_string_value(langueTemp));
-        iter = json_object_iter_next(getObjectLanguages, iter);
+        iter = json_object_iter_next(langues, iter);
     }
 }
 
-json_t * countries_getObjectLanguages(json_t *pays) {
+json_t * countries_langues(json_t *pays) {
     return json_object_get(pays, "languages");
 }
 
-json_t *countries_getObjectBorders(json_t *pays) {
+json_t *countries_frontieres(json_t *pays) {
     return json_object_get(pays, "borders");
 }
 
-int countries_numberOfLanguages(json_t *pays) {
-    json_t *getObjectLanguages = json_object_get(pays, "languages");
-    return json_object_size(getObjectLanguages);
+int countries_nbLangues(json_t *pays) {
+    json_t *langues = json_object_get(pays, "languages");
+    return json_object_size(langues);
 }
 
-const char * countries_getRegion(json_t *pays) {
-    json_t *getRegion = json_object_get(pays, "getRegion");
-    return json_string_value(getRegion);
+const char * countries_region(json_t *pays) {
+    json_t *region = json_object_get(pays, "region");
+    return json_string_value(region);
 }
 
-json_t * countries_countriesInARegion(json_t *tabPays, char *getRegion) {
+json_t * countries_paysSelonRegion(json_t *tabPays, char *region) {
     json_t *tabPaysRegion = json_array(); 
     int i;
     bool empty = true;
 
     for (i=0; i<json_array_size(tabPays); i++) {
         json_t *paysTemp = json_array_get(tabPays, i);
-        if (strcmp(countries_getRegion(paysTemp),getRegion) == 0) {
+        if (strcmp(countries_region(paysTemp),region) == 0) {
             json_array_append(tabPaysRegion, paysTemp);
             empty = false;
         }
     }
     if(empty){
-        printf("Invalid getRegion.\n");
+        printf("Invalid region.\n");
         exit(0);
     }else{
         return tabPaysRegion;
     }
 }
 
+//a faire:
+//changer get Capitale et getNom pour countries_Capitale et countries_Nom
+//gérer le cas où les fonctions getters ne trouvent pas d'objet voulu
+
+//on devrait pas rajouter une fonction qui load le fichier json?
+
+//pourquoi les fonctions qui écrivent dans des strings ne créent-elles 
+//pas elles-mêmes la string? pcq elles se trouvent dans un fichier différent 
+//de l'endroit ou elles sont appelées, ce qui fait que la string peut etre 
+//effacée ou modifiée

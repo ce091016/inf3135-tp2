@@ -58,12 +58,12 @@ void textFile(char **rep, char *filename, json_t *root){
     
     if(rep[COUNTRY] != NULL){
         
-        pays = countries_getCountry(rep[COUNTRY + 1],root);
+        pays = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
         onlyOneCountry = true;
     
     }else if(rep[REGION] != NULL){
         
-        values = countries_countriesInARegion(root,rep[REGION + 1]);
+        values = countries_paysSelonRegion(root,rep[REGION + 1]);
     
     }else{
        
@@ -74,26 +74,26 @@ void textFile(char **rep, char *filename, json_t *root){
         
         if(!onlyOneCountry) pays = json_array_get(values,i);
         
-        fprintf(file, "Name: %s\n",countries_getName(pays));
+        fprintf(file, "Name: %s\n",countries_getNomPays(pays));
         fprintf(file, "Code: %s\n",countries_getCode(pays));
     
         if(rep[SHOW_CAPITAL] != NULL){
-            fprintf(file, "Capital: %s\n",countries_getCapital(pays));
+            fprintf(file, "Capital: %s\n",countries_getCapitale(pays));
         }
 
         if(rep[SHOW_LANGUAGES] != NULL){
 
-            char *getObjectLanguages = (char*)malloc(sizeof(char)*countries_stringLengthLanguages(pays));
-            countries_writeLanguages(pays, getObjectLanguages);
-            fprintf(file, "Languages: %s\n", getObjectLanguages);
-            free(getObjectLanguages);
+            char *langues = (char*)malloc(sizeof(char)*countries_nbCaracteresLangues(pays));
+            countries_langues2(pays, langues);
+            fprintf(file, "Languages: %s\n", langues);
+            free(langues);
         }
     
         if(rep[SHOW_BORDERS] != NULL){
-            char *getObjectBorders =(char*)malloc(sizeof(char)*countries_stringLengthBorders(pays));
-            countries_writeBorders(pays, getObjectBorders);
-            fprintf(file, "Borders: %s\n", getObjectBorders);
-            free(getObjectBorders);
+            char *frontieres =(char*)malloc(sizeof(char)*countries_nbCaracteresFrontieres(pays));
+            countries_frontieres2(pays, frontieres);
+            fprintf(file, "Borders: %s\n", frontieres);
+            free(frontieres);
         }
 
         i++;
@@ -108,20 +108,20 @@ void textFile(char **rep, char *filename, json_t *root){
 void dotFile(char **rep, char *filename, json_t *root){
     json_t *pays;
     json_t *values;
-    int getObjectLanguages;
+    int langues;
     int capitale;
-    int getObjectBorders;
+    int frontieres;
     int flag;
     bool onlyOneCountry = false;
     
     if(rep[COUNTRY] != NULL){
        
-        pays = countries_getCountry(rep[COUNTRY + 1],root);
+        pays = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
         onlyOneCountry = true;
     
     }else if(rep[REGION] != NULL){
         
-        values = countries_countriesInARegion(root,rep[REGION + 1]);
+        values = countries_paysSelonRegion(root,rep[REGION + 1]);
     
     }else{
         
@@ -133,19 +133,19 @@ void dotFile(char **rep, char *filename, json_t *root){
     }
 
     if(rep[SHOW_LANGUAGES] != NULL){
-        getObjectLanguages = 1;
+        langues = 1;
     }
 
     if(rep[SHOW_BORDERS] != NULL){
-        getObjectBorders = 1;
+        frontieres = 1;
     }
 
     if(rep[SHOW_FLAG] != NULL){
         flag = 1;
     }
         
-    if(onlyOneCountry) graphviz_ecrireUnSeulPays(getObjectLanguages,capitale,getObjectBorders,flag,pays, filename);
-    if(!onlyOneCountry) graphviz_ecrirePlusieursPays(getObjectLanguages,capitale,getObjectBorders,flag,values, filename);
+    if(onlyOneCountry) graphviz_ecrireUnSeulPays(langues,capitale,frontieres,flag,pays, filename);
+    if(!onlyOneCountry) graphviz_ecrirePlusieursPays(langues,capitale,frontieres,flag,values, filename);
 
     if(rep[REGION] != NULL && rep[COUNTRY] != NULL) printf(COUNTRY_REGION_CONFLICT_MSG);
 }
@@ -173,12 +173,12 @@ void stdoutText(char **rep, json_t *root){
     
     if(rep[COUNTRY] != NULL){
         
-        pays = countries_getCountry(rep[COUNTRY + 1],root);
+        pays = countries_getJsonObjectFromCountry(rep[COUNTRY + 1],root);
         onlyOneCountry = true;
     
     }else if(rep[REGION] != NULL){
         
-        values = countries_countriesInARegion(root,rep[REGION + 1]);
+        values = countries_paysSelonRegion(root,rep[REGION + 1]);
     
     }else{
         
@@ -189,28 +189,28 @@ void stdoutText(char **rep, json_t *root){
         
         if(!onlyOneCountry) pays = json_array_get(values,i);
         
-        printf("Name: %s\n",countries_getName(pays));
+        printf("Name: %s\n",countries_getNomPays(pays));
         printf("Code: %s\n",countries_getCode(pays));
     
         if(rep[SHOW_CAPITAL] != NULL){
             
-            printf("Capital: %s\n",countries_getCapital(pays));
+            printf("Capital: %s\n",countries_getCapitale(pays));
         }
         
         if(rep[SHOW_LANGUAGES] != NULL){
             
-            char *getObjectLanguages = (char*)malloc(sizeof(char)*countries_stringLengthLanguages(pays));
-            countries_writeLanguages(pays, getObjectLanguages);
-            printf("Languages: %s\n", getObjectLanguages);
-            free(getObjectLanguages);
+            char *langues = (char*)malloc(sizeof(char)*countries_nbCaracteresLangues(pays));
+            countries_langues2(pays, langues);
+            printf("Languages: %s\n", langues);
+            free(langues);
         }
     
         if(rep[SHOW_BORDERS] != NULL){
             
-            char *getObjectBorders =(char*)malloc(sizeof(char)*countries_stringLengthBorders(pays));
-            countries_writeBorders(pays, getObjectBorders);
-            printf("Borders: %s\n", getObjectBorders);
-            free(getObjectBorders);
+            char *frontieres =(char*)malloc(sizeof(char)*countries_nbCaracteresFrontieres(pays));
+            countries_frontieres2(pays, frontieres);
+            printf("Borders: %s\n", frontieres);
+            free(frontieres);
         }
         i++;
     }while(rep[COUNTRY] == NULL && i < json_array_size(values));
