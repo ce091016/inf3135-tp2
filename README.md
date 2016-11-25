@@ -1,11 +1,10 @@
 # Travail pratique 2
 
 ## Description
-- Ce projet permet d'aller chercher dans informations concernant des pays dans une base de donnée de format Jansson. En effet, le sous-module 'countries' permet d'aller retrouver les informations que l'utilisateur souhaite avoir. (Nom pays, code pays, frontières, langues et drapeau.) 
+- Ce projet permet d'aller chercher dans informations concernant des pays dans une base de donnée de format 'Json'. En effet, le sous-module 'countries' permet d'aller retrouver les informations que l'utilisateur souhaite avoir. (Nom pays, code pays, frontières, langues et drapeau.) 
 - L'utilisateur peut choisir de voir un seul, pays, une région entière ou tous les pays de la base de données.
 Veuillez entrer la commande 'bin/tp2 --help' pour plus d'informations
-- Ce projet a été réalisé dans le cadre du cours Construction et maintenance logicielle (INF3135)
-Université du Québec à Montréal.
+- Ce projet a été réalisé dans le cadre du cours Construction et maintenance de logiciels (INF3135) à l'Université du Québec à Montréal.
 
 ## Auteurs
 
@@ -19,11 +18,13 @@ Cependant, il devrait être fonctionnel sur les autres versions de linux et sur 
 
 ## Dépendances
 
-Donnez la liste des bibliothèques et des logiciels qui doivent être installées
-pour que le projet soit fonctionnel. Donnez le lien vers ceux-ci pour que
-l'utilisateur puisse être redirigé vers les sites officiels des
-logiciels/bibliothèques pour effectuer l'installation le cas échéant. N'oubliez
-pas d'indiquer
+Ce projet utilise les outils 'Graphviz', 'CUnit', 'Bats' et 'Jansson'. Il utilise également le projet 'countries' en tant que sous-module.
+
+*Graphviz: http://www.graphviz.org/Download.php
+*CUnit: https://sourceforge.net/projects/cunit/
+*Bats: https://github.com/sstephenson/bats
+*Jansson: https://github.com/akheron/jansson
+*countries: https://github.com/ablondin/countries
 
 ## Installation
 
@@ -141,6 +142,12 @@ Citez vos sources ici, s'il y a lieu.
         (responsable: Olivier)
 
 - [x] Tests (responsables: Jean-Lou et Olivier)
+  
+  - [x] Tests Bats (responsables: Jean-Lou et Olivier)
+  
+  - [x] Tests CUnit (responsable: Olivier)
+   
+  - [x] Intégration continue (responsables: Olivier et Jean-Lou)
 
 
 - [x] Autres
