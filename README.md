@@ -20,11 +20,11 @@ Cependant, il devrait être fonctionnel sur les autres versions de linux et sur 
 
 Ce projet utilise les outils 'Graphviz', 'CUnit', 'Bats' et 'Jansson'. Il utilise également le projet 'countries' en tant que sous-module.
 
-*Graphviz: http://www.graphviz.org/Download.php
-*CUnit: https://sourceforge.net/projects/cunit/
-*Bats: https://github.com/sstephenson/bats
-*Jansson: https://github.com/akheron/jansson
-*countries: https://github.com/ablondin/countries
+* Graphviz: http://www.graphviz.org/Download.php
+* CUnit: https://sourceforge.net/projects/cunit/
+* Bats: https://github.com/sstephenson/bats
+* Jansson: https://github.com/akheron/jansson
+* countries: https://github.com/ablondin/countries
 
 ## Installation
 
