@@ -89,6 +89,7 @@ Ce projet utilise les outils 'Graphviz', 'CUnit', 'Bats' et 'Jansson'. Il utilis
 * Makefile: fichier permettant une compilation rapide et un nettoyage de repertoires rapide
 * README.md: fichier contenant les informations importantes sur le projet
 * testsBats.bats: la serie de tests que le projet doit verifier
+
 **Répertoire src**
 * tp2.c: code source du fichier exécutable
 * countries.c: code source permettant de manipuler la base de données countries.json
@@ -96,10 +97,10 @@ Ce projet utilise les outils 'Graphviz', 'CUnit', 'Bats' et 'Jansson'. Il utilis
 * graphviz.c: code source permettant de générer des fichiers au format .dot pour représenter 
               graphiquement les pays de la base de données countries.json
 * graphviz.h: en-tête du fichier graphviz.c
-* input.c:
-* input.h:
-* output.c:
-* output.h:
+* input.c: code source permettant de gérer les entrées de l'utilisateur
+* input.h: en-tête du fichier input.c
+* output.c: code source permettant de gérer tous les cas de sorties (différents formats)
+* output.h: en-tête du fichier output.c
 * util.c: contient des fonctions utiles qui peuvent n'appartiennent pas à un module en particulier
 * util.h: en-tête du fichier util.c
 
@@ -156,4 +157,4 @@ Citez vos sources ici, s'il y a lieu.
 
   - [x] Respect de la structure des répertoires (responsable: Jean-Lou)
 
-  - [x] Documentation et README (respomsables: Jean-Lou et Olivier)
+  - [x] Documentation et README (responsables: Jean-Lou et Olivier)
