@@ -20,7 +20,7 @@ Cependant, il devrait être fonctionnel sur les autres versions de linux et sur 
 
 ## Dépendances
 
-Ce projet utilise les outils 'Graphviz', 'CUnit', 'Bats' et 'Jansson'. Il utilise également le projet 'countries' en tant que sous-module.
+Ce projet utilise les outils `Graphviz`, `CUnit`, `Bats` et `Jansson`. Il utilise également le projet `countries` en tant que sous-module.
 
 * Graphviz: http://www.graphviz.org/Download.php
 * CUnit: https://sourceforge.net/projects/cunit/
