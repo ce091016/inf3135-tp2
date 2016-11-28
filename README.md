@@ -2,9 +2,11 @@
 
 ## Description
 - Ce projet permet d'aller chercher dans informations concernant des pays dans une base de donnée de format 'Json'. En effet, le sous-module 'countries' permet d'aller retrouver les informations que l'utilisateur souhaite avoir. (Nom pays, code pays, frontières, langues et drapeau.) 
-- L'utilisateur peut choisir de voir un seul, pays, une région entière ou tous les pays de la base de données.
-Veuillez entrer la commande 'bin/tp2 --help' pour plus d'informations
-- Ce projet a été réalisé dans le cadre du cours Construction et maintenance de logiciels (INF3135) à l'Université du Québec à Montréal.
+- L'utilisateur peut choisir de voir un seul pays, une région entière ou tous les pays de la base de données.
+- Ce projet a été réalisé dans le cadre du cours Construction et maintenance de logiciels (INF3135) 
+- Université du Québec à Montréal.
+
+*Veuillez entrer la commande 'bin/tp2 --help' pour plus d'informations.*
 
 ## Auteurs
 
@@ -14,7 +16,7 @@ Veuillez entrer la commande 'bin/tp2 --help' pour plus d'informations
 ## Plateformes supportées
 
 Ce projet a été testé sur une seule plateforme : Ubuntu 16.04 LTS.
-Cependant, il devrait être fonctionnel sur les autres versions de linux et sur MacOs.
+Cependant, il devrait être fonctionnel sur les autres versions de linux et sur Mac.
 
 ## Dépendances
 
@@ -85,10 +87,9 @@ Ce projet utilise les outils 'Graphviz', 'CUnit', 'Bats' et 'Jansson'. Il utilis
 **Racine du projet**
 * .gitignore: contient une liste de fichiers que Git peut ignorer lors d'un commit
 * .gitlab-ci.yml: fichier permettant l'intégration continue des tests
-* .gitmodules: 
+* .gitmodules: fichier nécéssaire pour l'intégration d'un sous-module
 * Makefile: fichier permettant une compilation rapide et un nettoyage de repertoires rapide
 * README.md: fichier contenant les informations importantes sur le projet
-* testsBats.bats: la serie de tests que le projet doit verifier
 
 **Répertoire src**
 * tp2.c: code source du fichier exécutable
@@ -104,16 +105,25 @@ Ce projet utilise les outils 'Graphviz', 'CUnit', 'Bats' et 'Jansson'. Il utilis
 * util.c: contient des fonctions utiles qui peuvent n'appartiennent pas à un module en particulier
 * util.h: en-tête du fichier util.c
 
+**Répertoire test**
+* testsBats.bats: la serie de tests bats
+* test_countries.c: la série de tests C-unit. 
+
+**Répertoire data**
+* Répertoire content le sous-module 'countries'.
 
 ## Références
 
-Citez vos sources ici, s'il y a lieu.
+- http://stackoverflow.com/ 
+- https://docs.gitlab.com/ce/ci/yaml/README.html
+- https://www.gnu.org/software/make/manual/make.html
 
 ## Statut
 
 - Aucun bogue reconnu pour l'instant.
 
 - Cependant, une optimisation de la création du fichier '.png' devrait être accomplie; il serait préférable d'éviter la création du fichier temporaire.
+
 
 - [x] Module graphviz
 
